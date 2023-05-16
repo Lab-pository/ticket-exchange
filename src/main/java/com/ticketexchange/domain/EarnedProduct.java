@@ -2,6 +2,7 @@ package com.ticketexchange.domain;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ public class EarnedProduct {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "earned_product_id")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -34,5 +36,21 @@ public class EarnedProduct {
 		this.acquiredBy = acquiredBy;
 		this.product = product;
 		this.createdAt = LocalDate.now();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Member getAcquiredBy() {
+		return acquiredBy;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public LocalDate getCreatedAt() {
+		return createdAt;
 	}
 }
