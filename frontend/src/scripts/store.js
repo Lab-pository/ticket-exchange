@@ -3,14 +3,14 @@ import {createStore} from "vuex"
 const store = createStore({
   state() {
     return {
-      account: {
+      member: {
         token: "",
       }
     }
   },
   mutations: {
-    setAccount(state, payload) {
-      state.account.token = payload;
+    setToken(state, payload) {
+      state.member.token = payload;
     }
   }
 })
