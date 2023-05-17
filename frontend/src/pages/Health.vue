@@ -11,8 +11,7 @@ export default {
   name: "Health",
   setup() {
     const checkHealth = () => {
-      axios.get("/api/v1/health"
-      ).then((res) => {
+      axios.get("/api/v1/health").then((res) => {
         window.alert("Hello world, result = " + res.data.data);
       }).catch(() => {
         window.alert("Please check server status");
