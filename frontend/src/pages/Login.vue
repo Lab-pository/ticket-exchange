@@ -1,51 +1,83 @@
 <template>
-  <div>
-    <h1>로그인</h1>
-    <form @submit.prevent="submit">
-      <div>
-        <label for="email">이메일</label>
-        <input type="email" id="email" @keyup.enter="submit()" v-model="state.form.email">
+  <div class="login-container">
+    <div class="login-content">
+      <h1 class="login-title">로그인</h1>
+      <div class="form-item">
+        <input type="email" name="email" class="form-control" placeholder="이메일" v-model="state.form.email"
+               required/>
       </div>
-      <div>
-        <label for="password">비밀번호</label>
-        <input type="password" id="password" @keyup.enter="submit()" v-model="state.form.password">
+      <div class="form-item">
+        <input type="password" name="password" class="form-control" placeholder="비밀번호" @keyup.enter="submit()"
+               v-model="state.form.password" required/>
       </div>
-      <button type="submit" @click="submit()">로그인</button>
-    </form>
+      <div class="form-item">
+        <button class="btn btn-block btn-primary" @click="submit()">로그인</button>
+      </div>
+      <span class="signup-link">처음 방문하신다면? <RouterLink to="/signup"> 회원가입 페이지로 이동</RouterLink></span>
+    </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
 import {reactive} from "vue";
 import store from "@/scripts/store";
 import router from "@/scripts/router";
 
-export default {
-  setup() {
-    const state = reactive({
-      form: {
-        email: "",
-        password: ""
-      }
-    })
+const state = reactive({
+  form: {
+    email: "",
+    password: ""
+  }
+})
 
-    const submit = () => {
-      axios.post("/api/v1/login", state.form).then((res) => {
-        store.commit("setAccount", res.data)
-        sessionStorage.setItem("token", res.data)
-        router.push({path: "/"})
-        window.alert("로그인하였습니다.");
-      }).catch(() => {
-        window.alert("잘못된 정보 입니다.");
-      });
-    }
-    return {state, submit}
-  },
-  name: "Login"
+const submit = () => {
+  axios.post("/api/v1/login", state.form).then((res) => {
+    const token = res.data.data.token;
+    store.commit("setToken", token);
+    sessionStorage.setItem("token", token);
+    router.push({path: "/"});
+    window.alert("로그인하였습니다.");
+  }).catch((res) => {
+    console.log(JSON.stringify(res.data))
+    window.alert("아이디와 비밀번호를 확인해주세요.");
+  });
 }
 </script>
 
 <style scoped>
+.login-container {
+  text-align: center;
+}
 
+.login-content {
+  background: #fff;
+  box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+  border-radius: 2px;
+  width: 500px;
+  display: inline-block;
+  margin-top: 30px;
+  vertical-align: middle;
+  position: relative;
+  padding: 35px;
+}
+
+.social-btn img {
+  height: 32px;
+  float: left;
+  margin-top: 10px;
+}
+
+.signup-link span {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+}
+
+.login-title {
+  font-size: 1.5em;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: rgba(0, 0, 0, 0.65);
+}
 </style>
