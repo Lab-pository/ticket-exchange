@@ -1,7 +1,6 @@
 package com.ticketexchange.controller;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ticketexchange.auth.CurrentUser;
 import com.ticketexchange.auth.MemberToken;
-import com.ticketexchange.controller.dto.TicketDetailsResponse;
+import com.ticketexchange.controller.dto.TicketDetailsResponses;
 import com.ticketexchange.controller.dto.TicketRequest;
 import com.ticketexchange.controller.dto.TicketResponse;
 import com.ticketexchange.service.TicketService;
@@ -40,12 +39,11 @@ public class TicketController {
 	}
 
 	@GetMapping
-	public ResponseEntity<ApiResult<List<TicketDetailsResponse>>> findAllTicketsByMember(
+	public ResponseEntity<ApiResult<TicketDetailsResponses>> findAllTicketsByMember(
 		@CurrentUser MemberToken token
 	) {
 		return ResponseEntity.ok(
-			ApiResult.succeed(
-				ticketService.findAllTicketsByMember(token).stream().map(TicketDetailsResponse::of).toList())
+			ApiResult.succeed(TicketDetailsResponses.of(ticketService.findAllTicketsByMember(token)))
 		);
 	}
 }
