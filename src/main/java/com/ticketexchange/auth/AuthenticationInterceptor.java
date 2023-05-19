@@ -17,24 +17,13 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String encodedToken = request.getHeader(TOKEN_HEADER);
-
-		if (encodedToken == null || encodedToken.equals("")) {
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			return false;
+		if (encodedToken == null || encodedToken.isBlank()) {
+			return true;
 		}
-
-		byte[] decode;
-
-		try {
-			decode = Base64.getDecoder().decode(encodedToken.getBytes());
-		} catch(IllegalArgumentException e) {
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			return false;
-		}
-
+		byte[] decode = Base64.getDecoder().decode(encodedToken.getBytes());
 		MemberToken token = JsonUtils.fromJson(new String(decode), MemberToken.class);
 		if (token.isExpired()) {
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			return false;
 		}
 		request.setAttribute("memberToken", token);
