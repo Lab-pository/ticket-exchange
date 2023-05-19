@@ -57,4 +57,14 @@ public class MemberService {
 	private long getExpireTime() {
 		return Instant.now().toEpochMilli() + TOKEN_EXPIRE;
 	}
+
+	@Transactional(readOnly = true)
+	public boolean isDuplicateEmail(String email) {
+		return memberRepository.existsByEmail(email);
+	}
+
+	@Transactional(readOnly = true)
+	public boolean isDuplicateNickname(String nickname) {
+		return memberRepository.existsByNickname(nickname);
+	}
 }
