@@ -4,11 +4,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ticketexchange.auth.CurrentUser;
 import com.ticketexchange.auth.MemberToken;
 import com.ticketexchange.domain.EarnedProduct;
 import com.ticketexchange.domain.Member;
@@ -29,6 +30,7 @@ public class ProductService {
 	private final TicketRepository ticketRepository;
 	private final ProductRepository productRepository;
 	private final EarnedProductRepository earnedProductRepository;
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	public ProductService(MemberRepository memberRepository, TicketRepository ticketRepository,
 		ProductRepository productRepository, EarnedProductRepository earnedProductRepository) {
@@ -50,16 +52,18 @@ public class ProductService {
 		int neededTicketCount = product.getNeedTicketCount();
 		if (!hasEnoughTicket(neededTicketCount, memberId, now) || notEnoughProduct(product.getRemainQuantity())
 			|| notWinningProduct(product.getProbability())) {
-			return new ApplyProductDto(false);
+			return ApplyProductDto.of(false, product);
 		}
 		useTicketForProduct(memberId, now, neededTicketCount, product.getName());
 		product.decreaseRemainQuantity();
 		memberEarnedProduct(memberId, product);
-		return new ApplyProductDto(true);
+		return ApplyProductDto.of(true, product);
 	}
 
 	private boolean notWinningProduct(double productProbability) {
-		return productProbability >= ThreadLocalRandom.current().nextDouble();
+		double probability = ThreadLocalRandom.current().nextDouble();
+		log.info("productProbability: {}, probability: {}", productProbability, probability);
+		return productProbability < probability;
 	}
 
 	private boolean notEnoughProduct(int remainQuantity) {
@@ -67,8 +71,9 @@ public class ProductService {
 	}
 
 	private void useTicketForProduct(Long memberId, LocalDate now, int neededTicketCount, String productName) {
-		List<Ticket> tickets = ticketRepository.findAllByMemberIdAndExpireDateBeforeAndUsed(memberId, now,
-			false, sortAcquiredDateAsc()).subList(0, neededTicketCount);
+		boolean notUsed = false;
+		List<Ticket> tickets = ticketRepository.findAllByMemberIdAndExpireDateGreaterThanEqualAndIsUsed(memberId, now,
+			notUsed, sortAcquiredDateAsc()).subList(0, neededTicketCount);
 		tickets.forEach(t -> t.use(productName));
 	}
 
@@ -82,13 +87,13 @@ public class ProductService {
 	}
 
 	private boolean hasEnoughTicket(int neededTicketCount, Long memberId, LocalDate now) {
-		return neededTicketCount <= ticketRepository.countByMemberIdAndExpireDateBefore(memberId, now);
+		return neededTicketCount <= ticketRepository.countByMemberIdAndExpireDateGreaterThanEqual(memberId, now);
 	}
 
 	@Transactional(readOnly = true)
 	public List<ProductDto> findAllValidProducts(LocalDate now) {
-		List<Product> products = productRepository.findAllByValidStartDateAfterAndValidEndDateBefore(
-			now, now);
+		List<Product> products = productRepository
+			.findAllByValidStartDateLessThanEqualAndValidEndDateGreaterThanEqual(now, now);
 		return products.stream().map(ProductDto::of).toList();
 	}
 }
