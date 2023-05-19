@@ -18,5 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	@Query("select p from Product p where p.id = :id")
 	Optional<Product> findByIdWithPessimisticLock(Long id);
 
-	List<Product> findAllByValidStartDateAfterAndValidEndDateBefore(LocalDate startDate, LocalDate endDate);
+	List<Product> findAllByValidStartDateLessThanEqualAndValidEndDateGreaterThanEqual(LocalDate startDate,
+		LocalDate endDate);
 }
