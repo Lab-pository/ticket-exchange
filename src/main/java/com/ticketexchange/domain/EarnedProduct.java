@@ -1,6 +1,6 @@
 package com.ticketexchange.domain;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,10 +24,10 @@ public class EarnedProduct {
 	private Member acquiredBy;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "item_id")
+	@JoinColumn(name = "product_id")
 	private Product product;
 
-	private LocalDate createdAt;
+	private LocalDateTime createdAt;
 
 	protected EarnedProduct() {
 	}
@@ -35,7 +35,7 @@ public class EarnedProduct {
 	public EarnedProduct(Member acquiredBy, Product product) {
 		this.acquiredBy = acquiredBy;
 		this.product = product;
-		this.createdAt = LocalDate.now();
+		this.createdAt = LocalDateTime.now();
 	}
 
 	public Long getId() {
@@ -50,7 +50,7 @@ public class EarnedProduct {
 		return product;
 	}
 
-	public LocalDate getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 }
