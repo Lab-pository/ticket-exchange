@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.ticketexchange.domain.Ticket;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-	long countByMemberIdAndExpireDateBefore(Long memberId, LocalDate expireDate);
+	long countByMemberIdAndExpireDateGreaterThanEqual(Long memberId, LocalDate expireDate);
 
-	List<Ticket> findAllByMemberIdAndExpireDateBeforeAndUsed(Long memberId, LocalDate expireDate, boolean used, Sort sort);
+	List<Ticket> findAllByMemberIdAndExpireDateGreaterThanEqualAndIsUsed(Long memberId, LocalDate expireDate, boolean used, Sort sort);
 
 	List<Ticket> findAllByMemberId(Long memberId);
 }
