@@ -19,8 +19,8 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import {reactive} from "vue";
+import axios from "axios";
 import store from "@/scripts/store";
 import router from "@/scripts/router";
 
@@ -39,7 +39,6 @@ const submit = () => {
     router.push({path: "/"});
     window.alert("로그인하였습니다.");
   }).catch((res) => {
-    console.log(JSON.stringify(res.data))
     window.alert("아이디와 비밀번호를 확인해주세요.");
   });
 }
@@ -60,12 +59,6 @@ const submit = () => {
   vertical-align: middle;
   position: relative;
   padding: 35px;
-}
-
-.social-btn img {
-  height: 32px;
-  float: left;
-  margin-top: 10px;
 }
 
 .signup-link span {
