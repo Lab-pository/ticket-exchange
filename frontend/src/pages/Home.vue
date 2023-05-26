@@ -2,8 +2,7 @@
   <div class="home">
     <div class="container">
       <div class="home-intro">
-        <h1>뽑기 연습</h1>
-        <p>뽑기 연습을 해보세요.</p>
+        <h1>티켓 교환소</h1>
       </div>
       <div class="products-container">
         <div v-for="(p, idx) in state.products" :key="idx">
