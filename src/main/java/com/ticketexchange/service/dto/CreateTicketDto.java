@@ -6,30 +6,31 @@ import com.ticketexchange.domain.Member;
 import com.ticketexchange.domain.Ticket;
 
 public class CreateTicketDto {
-	private String howToAcquire;
-	private int count;
 
-	protected CreateTicketDto() {
-	}
+    private String howToAcquire;
+    private int count;
 
-	public CreateTicketDto(String howToAcquire, int count) {
-		this.howToAcquire = howToAcquire;
-		this.count = count;
-	}
+    protected CreateTicketDto() {
+    }
 
-	public Ticket toEntity(Member member) {
-		return new Ticket(member, howToAcquire);
-	}
+    public CreateTicketDto(String howToAcquire, int count) {
+        this.howToAcquire = howToAcquire;
+        this.count = count;
+    }
 
-	public Ticket toEntity(Member member, LocalDate now) {
-		return new Ticket(member, howToAcquire, now);
-	}
+    public Ticket toEntity(Member member) {
+        return new Ticket(member, howToAcquire);
+    }
 
-	public String getHowToAcquire() {
-		return howToAcquire;
-	}
+    public Ticket toEntity(Member member, LocalDate now) {
+        return new Ticket(member, howToAcquire, now);
+    }
 
-	public int getCount() {
-		return count;
-	}
+    public String getHowToAcquire() {
+        return howToAcquire;
+    }
+
+    public int getCount() {
+        return count;
+    }
 }

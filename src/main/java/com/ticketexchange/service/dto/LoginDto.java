@@ -1,22 +1,23 @@
 package com.ticketexchange.service.dto;
 
 public class LoginDto {
-	private String email;
-	private String password;
 
-	protected LoginDto() {
-	}
+    private String email;
+    private String password;
 
-	public LoginDto(String email, String password) {
-		this.email = email;
-		this.password = password;
-	}
+    protected LoginDto() {
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public LoginDto(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

@@ -5,47 +5,50 @@ import java.time.LocalDate;
 import com.ticketexchange.service.dto.CreateProductDto;
 
 public class ProductRequest {
-	private String name;
-	private int needTicketCount;
-	private int totalQuantity;
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private double probability;
 
-	protected ProductRequest() {
-	}
+    private String name;
+    private int needTicketCount;
+    private int totalQuantity;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private double probability;
 
-	public ProductRequest(String name, int needTicketCount, int totalQuantity, LocalDate startDate, LocalDate endDate,
-		double probability) {
-		this.name = name;
-		this.needTicketCount = needTicketCount;
-		this.totalQuantity = totalQuantity;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.probability = probability;
-	}
+    protected ProductRequest() {
+    }
 
-	public CreateProductDto toCreateProductDto() {
-		return new CreateProductDto(name, needTicketCount, totalQuantity, startDate, endDate, probability);
-	}
+    public ProductRequest(
+            String name, int needTicketCount, int totalQuantity, LocalDate startDate, LocalDate endDate,
+            double probability
+    ) {
+        this.name = name;
+        this.needTicketCount = needTicketCount;
+        this.totalQuantity = totalQuantity;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.probability = probability;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public CreateProductDto toCreateProductDto() {
+        return new CreateProductDto(name, needTicketCount, totalQuantity, startDate, endDate, probability);
+    }
 
-	public int getNeedTicketCount() {
-		return needTicketCount;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getTotalQuantity() {
-		return totalQuantity;
-	}
+    public int getNeedTicketCount() {
+        return needTicketCount;
+    }
 
-	public LocalDate getStartDate() {
-		return startDate;
-	}
+    public int getTotalQuantity() {
+        return totalQuantity;
+    }
 
-	public LocalDate getEndDate() {
-		return endDate;
-	}
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 }

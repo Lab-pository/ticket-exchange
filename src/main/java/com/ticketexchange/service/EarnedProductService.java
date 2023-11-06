@@ -12,14 +12,15 @@ import com.ticketexchange.service.dto.EarnedProductDto;
 @Service
 @Transactional
 public class EarnedProductService {
-	private final EarnedProductRepository earnedProductRepository;
 
-	public EarnedProductService(EarnedProductRepository earnedProductRepository) {
-		this.earnedProductRepository = earnedProductRepository;
-	}
+    private final EarnedProductRepository earnedProductRepository;
 
-	@Transactional(readOnly = true)
-	public List<EarnedProductDto> getEarnedProducts(MemberToken token) {
-		return earnedProductRepository.findAllByAcquiredById(token.getId()).stream().map(EarnedProductDto::of).toList();
-	}
+    public EarnedProductService(EarnedProductRepository earnedProductRepository) {
+        this.earnedProductRepository = earnedProductRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public List<EarnedProductDto> getEarnedProducts(MemberToken token) {
+        return earnedProductRepository.findAllByAcquiredById(token.getId()).stream().map(EarnedProductDto::of).toList();
+    }
 }

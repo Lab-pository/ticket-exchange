@@ -1,26 +1,27 @@
 package com.ticketexchange.service.dto;
 
 public class TokenDto {
-	private Long id;
-	private Long expire;
 
-	protected TokenDto() {
-	}
+    private Long id;
+    private Long expire;
 
-	public TokenDto(Long id, Long expire) {
-		this.id = id;
-		this.expire = expire;
-	}
+    protected TokenDto() {
+    }
 
-	public static TokenDto of(Long id, Long expire) {
-		return new TokenDto(id, expire);
-	}
+    public TokenDto(Long id, Long expire) {
+        this.id = id;
+        this.expire = expire;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public static TokenDto of(Long id, Long expire) {
+        return new TokenDto(id, expire);
+    }
 
-	public Long getExpire() {
-		return expire;
-	}
+    public Long getId() {
+        return id;
+    }
+
+    public Long getExpire() {
+        return expire;
+    }
 }

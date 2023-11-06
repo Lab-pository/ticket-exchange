@@ -15,83 +15,83 @@ import jakarta.persistence.Transient;
 @Entity
 public class Ticket {
 
-	@Transient
-	private static final int VALID_PERIOD = 180;
+    @Transient
+    private static final int VALID_PERIOD = 180;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ticket_id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ticket_id")
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
-	private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-	private String howToAcquire;
+    private String howToAcquire;
 
-	private LocalDate acquireDate;
+    private LocalDate acquireDate;
 
-	private LocalDate expireDate;
+    private LocalDate expireDate;
 
-	private boolean isUsed;
+    private boolean isUsed;
 
-	private String howToUse;
+    private String howToUse;
 
-	private LocalDate usedDate;
+    private LocalDate usedDate;
 
-	protected Ticket() {
-	}
+    protected Ticket() {
+    }
 
-	public Ticket(Member member, String howToAcquire) {
-		LocalDate now = LocalDate.now();
-		this.member = member;
-		this.howToAcquire = howToAcquire;
-		this.acquireDate = now;
-		this.expireDate = now.plusDays(VALID_PERIOD);
-	}
+    public Ticket(Member member, String howToAcquire) {
+        LocalDate now = LocalDate.now();
+        this.member = member;
+        this.howToAcquire = howToAcquire;
+        this.acquireDate = now;
+        this.expireDate = now.plusDays(VALID_PERIOD);
+    }
 
-	public Ticket(Member member, String howToAcquire, LocalDate now) {
-		this.member = member;
-		this.howToAcquire = howToAcquire;
-		this.acquireDate = now;
-		this.expireDate = now.plusDays(VALID_PERIOD);
-	}
+    public Ticket(Member member, String howToAcquire, LocalDate now) {
+        this.member = member;
+        this.howToAcquire = howToAcquire;
+        this.acquireDate = now;
+        this.expireDate = now.plusDays(VALID_PERIOD);
+    }
 
-	public void use(String productName) {
-		this.isUsed = true;
-		this.usedDate = LocalDate.now();
-		this.howToUse = productName;
-	}
+    public void use(String productName) {
+        this.isUsed = true;
+        this.usedDate = LocalDate.now();
+        this.howToUse = productName;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Member getMember() {
-		return member;
-	}
+    public Member getMember() {
+        return member;
+    }
 
-	public String getHowToAcquire() {
-		return howToAcquire;
-	}
+    public String getHowToAcquire() {
+        return howToAcquire;
+    }
 
-	public LocalDate getAcquireDate() {
-		return acquireDate;
-	}
+    public LocalDate getAcquireDate() {
+        return acquireDate;
+    }
 
-	public LocalDate getExpireDate() {
-		return expireDate;
-	}
+    public LocalDate getExpireDate() {
+        return expireDate;
+    }
 
-	public boolean isUsed() {
-		return isUsed;
-	}
+    public boolean isUsed() {
+        return isUsed;
+    }
 
-	public String getHowToUse() {
-		return howToUse;
-	}
+    public String getHowToUse() {
+        return howToUse;
+    }
 
-	public LocalDate getUsedDate() {
-		return usedDate;
-	}
+    public LocalDate getUsedDate() {
+        return usedDate;
+    }
 }

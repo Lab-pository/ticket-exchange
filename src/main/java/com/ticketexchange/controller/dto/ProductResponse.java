@@ -5,65 +5,69 @@ import java.time.LocalDate;
 import com.ticketexchange.service.dto.ProductDto;
 
 public class ProductResponse {
-	private Long productId;
-	private String name;
-	private LocalDate validStartDate;
-	private LocalDate validEndDate;
-	private Integer totalQuantity;
-	private Integer remainQuantity;
-	private Integer needTicketCount;
-	private Double probability;
 
-	protected ProductResponse() {
-	}
+    private Long productId;
+    private String name;
+    private LocalDate validStartDate;
+    private LocalDate validEndDate;
+    private Integer totalQuantity;
+    private Integer remainQuantity;
+    private Integer needTicketCount;
+    private Double probability;
 
-	public ProductResponse(Long productId, String name, LocalDate validStartDate, LocalDate validEndDate,
-		Integer totalQuantity, Integer remainQuantity, Integer needTicketCount, Double probability) {
-		this.productId = productId;
-		this.name = name;
-		this.validStartDate = validStartDate;
-		this.validEndDate = validEndDate;
-		this.totalQuantity = totalQuantity;
-		this.remainQuantity = remainQuantity;
-		this.needTicketCount = needTicketCount;
-		this.probability = probability;
-	}
+    protected ProductResponse() {
+    }
 
-	public static ProductResponse of(ProductDto productDto) {
-		return new ProductResponse(productDto.getProductId(), productDto.getName(), productDto.getValidStartDate(),
-			productDto.getValidEndDate(), productDto.getTotalQuantity(), productDto.getRemainQuantity(),
-			productDto.getNeedTicketCount(), productDto.getProbability());
-	}
+    public ProductResponse(
+            Long productId, String name, LocalDate validStartDate, LocalDate validEndDate,
+            Integer totalQuantity, Integer remainQuantity, Integer needTicketCount, Double probability
+    ) {
+        this.productId = productId;
+        this.name = name;
+        this.validStartDate = validStartDate;
+        this.validEndDate = validEndDate;
+        this.totalQuantity = totalQuantity;
+        this.remainQuantity = remainQuantity;
+        this.needTicketCount = needTicketCount;
+        this.probability = probability;
+    }
 
-	public Long getProductId() {
-		return productId;
-	}
+    public static ProductResponse of(ProductDto productDto) {
+        return new ProductResponse(productDto.getProductId(), productDto.getName(), productDto.getValidStartDate(),
+                productDto.getValidEndDate(), productDto.getTotalQuantity(), productDto.getRemainQuantity(),
+                productDto.getNeedTicketCount(), productDto.getProbability()
+        );
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getProductId() {
+        return productId;
+    }
 
-	public LocalDate getValidStartDate() {
-		return validStartDate;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public LocalDate getValidEndDate() {
-		return validEndDate;
-	}
+    public LocalDate getValidStartDate() {
+        return validStartDate;
+    }
 
-	public Integer getTotalQuantity() {
-		return totalQuantity;
-	}
+    public LocalDate getValidEndDate() {
+        return validEndDate;
+    }
 
-	public Integer getRemainQuantity() {
-		return remainQuantity;
-	}
+    public Integer getTotalQuantity() {
+        return totalQuantity;
+    }
 
-	public Integer getNeedTicketCount() {
-		return needTicketCount;
-	}
+    public Integer getRemainQuantity() {
+        return remainQuantity;
+    }
 
-	public Double getProbability() {
-		return probability;
-	}
+    public Integer getNeedTicketCount() {
+        return needTicketCount;
+    }
+
+    public Double getProbability() {
+        return probability;
+    }
 }

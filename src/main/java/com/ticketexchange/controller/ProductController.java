@@ -24,41 +24,42 @@ import com.ticketexchange.support.web.ApiResult;
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
-	private final ProductService productService;
 
-	public ProductController(ProductService productService) {
-		this.productService = productService;
-	}
+    private final ProductService productService;
 
-	@PostMapping
-	public ResponseEntity<ApiResult<ProductResponse>> registerProduct(@RequestBody ProductRequest productRequest) {
-		ProductResponse productResponse = ProductResponse.of(
-			productService.registerProduct(productRequest.toCreateProductDto())
-		);
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
-		return ResponseEntity.created(URI.create("/products/" + productResponse.getProductId()))
-			.body(ApiResult.succeed(productResponse));
-	}
+    @PostMapping
+    public ResponseEntity<ApiResult<ProductResponse>> registerProduct(@RequestBody ProductRequest productRequest) {
+        ProductResponse productResponse = ProductResponse.of(
+                productService.registerProduct(productRequest.toCreateProductDto())
+        );
 
-	@PostMapping("/{productId}")
-	public ResponseEntity<ApiResult<ApplyProductResponse>> applyProduct(
-		@CurrentUser MemberToken token,
-		@PathVariable Long productId,
-		@RequestParam LocalDate now
-	) {
-		return ResponseEntity.ok(ApiResult.succeed(
-			ApplyProductResponse.of(productService.applyProduct(token, productId, now))
-		));
-	}
+        return ResponseEntity.created(URI.create("/products/" + productResponse.getProductId()))
+                .body(ApiResult.succeed(productResponse));
+    }
 
-	@GetMapping
-	public ResponseEntity<ApiResult<List<ProductResponse>>> findAllValidProducts(@RequestParam LocalDate now) {
-		List<ProductResponse> productResponses = productService.findAllValidProducts(now)
-			.stream()
-			.map(ProductResponse::of)
-			.toList();
+    @PostMapping("/{productId}")
+    public ResponseEntity<ApiResult<ApplyProductResponse>> applyProduct(
+            @CurrentUser MemberToken token,
+            @PathVariable Long productId,
+            @RequestParam LocalDate now
+    ) {
+        return ResponseEntity.ok(ApiResult.succeed(
+                ApplyProductResponse.of(productService.applyProduct(token, productId, now))
+        ));
+    }
 
-		return ResponseEntity.ok(ApiResult.succeed(productResponses));
-	}
+    @GetMapping
+    public ResponseEntity<ApiResult<List<ProductResponse>>> findAllValidProducts(@RequestParam LocalDate now) {
+        List<ProductResponse> productResponses = productService.findAllValidProducts(now)
+                .stream()
+                .map(ProductResponse::of)
+                .toList();
+
+        return ResponseEntity.ok(ApiResult.succeed(productResponses));
+    }
 
 }

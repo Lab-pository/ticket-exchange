@@ -3,26 +3,27 @@ package com.ticketexchange.service.dto;
 import com.ticketexchange.domain.Product;
 
 public class ApplyProductDto {
-	private boolean result;
-	private ProductDto productDto;
 
-	protected ApplyProductDto() {
-	}
+    private boolean result;
+    private ProductDto productDto;
 
-	public ApplyProductDto(boolean result, ProductDto productDto) {
-		this.result = result;
-		this.productDto = productDto;
-	}
+    protected ApplyProductDto() {
+    }
 
-	public static ApplyProductDto of(boolean result, Product product) {
-		return new ApplyProductDto(result, ProductDto.of(product));
-	}
+    public ApplyProductDto(boolean result, ProductDto productDto) {
+        this.result = result;
+        this.productDto = productDto;
+    }
 
-	public boolean isResult() {
-		return result;
-	}
+    public static ApplyProductDto of(boolean result, Product product) {
+        return new ApplyProductDto(result, ProductDto.of(product));
+    }
 
-	public ProductDto getProductDto() {
-		return productDto;
-	}
+    public boolean isResult() {
+        return result;
+    }
+
+    public ProductDto getProductDto() {
+        return productDto;
+    }
 }

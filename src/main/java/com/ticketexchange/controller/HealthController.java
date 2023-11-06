@@ -12,11 +12,11 @@ import com.ticketexchange.support.web.ApiResult;
 @RequestMapping("/api/v1/health")
 public class HealthController {
 
-	private final Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
+    private final Logger log = org.slf4j.LoggerFactory.getLogger(getClass());
 
-	@GetMapping
-	public ResponseEntity<ApiResult<String>> health() {
-		log.info("health check");
-		return ResponseEntity.ok(ApiResult.succeed("OK"));
-	}
+    @GetMapping
+    public ResponseEntity<ApiResult<String>> health() {
+        log.info("health check");
+        return ResponseEntity.ok(ApiResult.succeed("OK"));
+    }
 }

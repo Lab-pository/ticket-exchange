@@ -5,39 +5,41 @@ import java.time.LocalDateTime;
 import com.ticketexchange.service.dto.EarnedProductDto;
 
 public class EarnedProductResponse {
-	private Long earnedProductId;
-	private Long productId;
-	private String name;
-	private LocalDateTime createdAt;
 
-	protected EarnedProductResponse() {
-	}
+    private Long earnedProductId;
+    private Long productId;
+    private String name;
+    private LocalDateTime createdAt;
 
-	public EarnedProductResponse(Long earnedProductId, Long productId, String name, LocalDateTime createdAt) {
-		this.earnedProductId = earnedProductId;
-		this.productId = productId;
-		this.name = name;
-		this.createdAt = createdAt;
-	}
+    protected EarnedProductResponse() {
+    }
 
-	public static EarnedProductResponse of(EarnedProductDto earnedProductDto) {
-		return new EarnedProductResponse(earnedProductDto.getEarnedProductId(), earnedProductDto.getProductId(),
-			earnedProductDto.getName(), earnedProductDto.getCreatedAt());
-	}
+    public EarnedProductResponse(Long earnedProductId, Long productId, String name, LocalDateTime createdAt) {
+        this.earnedProductId = earnedProductId;
+        this.productId = productId;
+        this.name = name;
+        this.createdAt = createdAt;
+    }
 
-	public Long getEarnedProductId() {
-		return earnedProductId;
-	}
+    public static EarnedProductResponse of(EarnedProductDto earnedProductDto) {
+        return new EarnedProductResponse(earnedProductDto.getEarnedProductId(), earnedProductDto.getProductId(),
+                earnedProductDto.getName(), earnedProductDto.getCreatedAt()
+        );
+    }
 
-	public Long getProductId() {
-		return productId;
-	}
+    public Long getEarnedProductId() {
+        return earnedProductId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getProductId() {
+        return productId;
+    }
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }

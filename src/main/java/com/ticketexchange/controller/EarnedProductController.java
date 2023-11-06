@@ -16,19 +16,20 @@ import com.ticketexchange.support.web.ApiResult;
 @RestController
 @RequestMapping("/api/v1/earned-products")
 public class EarnedProductController {
-	private final EarnedProductService earnedProductService;
 
-	public EarnedProductController(EarnedProductService earnedProductService) {
-		this.earnedProductService = earnedProductService;
-	}
+    private final EarnedProductService earnedProductService;
 
-	@GetMapping
-	public ResponseEntity<ApiResult<List<EarnedProductResponse>>> findAllEarnedProducts(
-		@CurrentUser MemberToken token
-	) {
-		return ResponseEntity.ok(ApiResult.succeed(
-			earnedProductService.getEarnedProducts(token).stream().map(EarnedProductResponse::of).toList()
-		));
-	}
+    public EarnedProductController(EarnedProductService earnedProductService) {
+        this.earnedProductService = earnedProductService;
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResult<List<EarnedProductResponse>>> findAllEarnedProducts(
+            @CurrentUser MemberToken token
+    ) {
+        return ResponseEntity.ok(ApiResult.succeed(
+                earnedProductService.getEarnedProducts(token).stream().map(EarnedProductResponse::of).toList()
+        ));
+    }
 
 }

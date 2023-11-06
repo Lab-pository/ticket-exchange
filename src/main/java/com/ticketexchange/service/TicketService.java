@@ -19,27 +19,28 @@ import com.ticketexchange.service.dto.TicketDto;
 @Service
 @Transactional
 public class TicketService {
-	private final MemberRepository memberRepository;
-	private final TicketRepository ticketRepository;
 
-	public TicketService(MemberRepository memberRepository, TicketRepository ticketRepository) {
-		this.memberRepository = memberRepository;
-		this.ticketRepository = ticketRepository;
-	}
+    private final MemberRepository memberRepository;
+    private final TicketRepository ticketRepository;
 
-	public TicketDto createTicket(MemberToken token, CreateTicketDto createTicketDto) {
-		Member member = memberRepository.findById(token.getId()).orElseThrow(IllegalArgumentException::new);
-		List<Ticket> tickets = new ArrayList<>();
-		Ticket ticket = createTicketDto.toEntity(member, LocalDate.now());
-		for (int i = 0; i < createTicketDto.getCount(); i++) {
-			tickets.add(ticket);
-		}
-		ticketRepository.saveAll(tickets);
-		return TicketDto.of(ticket);
-	}
+    public TicketService(MemberRepository memberRepository, TicketRepository ticketRepository) {
+        this.memberRepository = memberRepository;
+        this.ticketRepository = ticketRepository;
+    }
 
-	public List<TicketDetailsDto> findAllTicketsByMember(MemberToken token) {
-		List<Ticket> tickets = ticketRepository.findAllByMemberId(token.getId());
-		return tickets.stream().map(TicketDetailsDto::of).toList();
-	}
+    public TicketDto createTicket(MemberToken token, CreateTicketDto createTicketDto) {
+        Member member = memberRepository.findById(token.getId()).orElseThrow(IllegalArgumentException::new);
+        List<Ticket> tickets = new ArrayList<>();
+        Ticket ticket = createTicketDto.toEntity(member, LocalDate.now());
+        for (int i = 0; i < createTicketDto.getCount(); i++) {
+            tickets.add(ticket);
+        }
+        ticketRepository.saveAll(tickets);
+        return TicketDto.of(ticket);
+    }
+
+    public List<TicketDetailsDto> findAllTicketsByMember(MemberToken token) {
+        List<Ticket> tickets = ticketRepository.findAllByMemberId(token.getId());
+        return tickets.stream().map(TicketDetailsDto::of).toList();
+    }
 }

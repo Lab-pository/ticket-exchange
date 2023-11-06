@@ -3,26 +3,27 @@ package com.ticketexchange.auth;
 import java.time.Instant;
 
 public class MemberToken {
-	private Long id;
-	private Long expire;
 
-	protected MemberToken() {
-	}
+    private Long id;
+    private Long expire;
 
-	public MemberToken(Long id, Long expire) {
-		this.id = id;
-		this.expire = expire;
-	}
+    protected MemberToken() {
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public MemberToken(Long id, Long expire) {
+        this.id = id;
+        this.expire = expire;
+    }
 
-	public Long getExpire() {
-		return expire;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public boolean isExpired() {
-		return Instant.now().toEpochMilli() > expire;
-	}
+    public Long getExpire() {
+        return expire;
+    }
+
+    public boolean isExpired() {
+        return Instant.now().toEpochMilli() > expire;
+    }
 }

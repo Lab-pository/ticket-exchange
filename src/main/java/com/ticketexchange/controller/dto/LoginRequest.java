@@ -3,26 +3,27 @@ package com.ticketexchange.controller.dto;
 import com.ticketexchange.service.dto.LoginDto;
 
 public class LoginRequest {
-	private String email;
-	private String password;
 
-	protected LoginRequest() {
-	}
+    private String email;
+    private String password;
 
-	public LoginRequest(String email, String password) {
-		this.email = email;
-		this.password = password;
-	}
+    protected LoginRequest() {
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public LoginRequest(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public LoginDto toLoginDto() {
-		return new LoginDto(email, password);
-	}
+    public String getPassword() {
+        return password;
+    }
+
+    public LoginDto toLoginDto() {
+        return new LoginDto(email, password);
+    }
 }

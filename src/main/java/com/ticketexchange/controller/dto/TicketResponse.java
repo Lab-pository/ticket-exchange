@@ -5,32 +5,33 @@ import java.time.LocalDate;
 import com.ticketexchange.service.dto.TicketDto;
 
 public class TicketResponse {
-	private String howToAcquire;
-	private LocalDate acquireDate;
-	private LocalDate expireDate;
 
-	protected TicketResponse() {
-	}
+    private String howToAcquire;
+    private LocalDate acquireDate;
+    private LocalDate expireDate;
 
-	public TicketResponse(String howToAcquire, LocalDate acquireDate, LocalDate expireDate) {
-		this.howToAcquire = howToAcquire;
-		this.acquireDate = acquireDate;
-		this.expireDate = expireDate;
-	}
+    protected TicketResponse() {
+    }
 
-	public static TicketResponse of(TicketDto ticketDto) {
-		return new TicketResponse(ticketDto.getHowToAcquire(), ticketDto.getAcquireDate(), ticketDto.getExpireDate());
-	}
+    public TicketResponse(String howToAcquire, LocalDate acquireDate, LocalDate expireDate) {
+        this.howToAcquire = howToAcquire;
+        this.acquireDate = acquireDate;
+        this.expireDate = expireDate;
+    }
 
-	public String getHowToAcquire() {
-		return howToAcquire;
-	}
+    public static TicketResponse of(TicketDto ticketDto) {
+        return new TicketResponse(ticketDto.getHowToAcquire(), ticketDto.getAcquireDate(), ticketDto.getExpireDate());
+    }
 
-	public LocalDate getAcquireDate() {
-		return acquireDate;
-	}
+    public String getHowToAcquire() {
+        return howToAcquire;
+    }
 
-	public LocalDate getExpireDate() {
-		return expireDate;
-	}
+    public LocalDate getAcquireDate() {
+        return acquireDate;
+    }
+
+    public LocalDate getExpireDate() {
+        return expireDate;
+    }
 }

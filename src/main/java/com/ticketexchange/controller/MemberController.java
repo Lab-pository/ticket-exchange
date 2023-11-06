@@ -24,42 +24,42 @@ import com.ticketexchange.support.web.ApiResult;
 @RequestMapping("/api/v1")
 public class MemberController {
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
-	private final MemberService memberService;
+    private final Logger log = LoggerFactory.getLogger(getClass());
+    private final MemberService memberService;
 
-	public MemberController(MemberService memberService) {
-		this.memberService = memberService;
-	}
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
-	@PostMapping("/members")
-	public ResponseEntity<ApiResult<MemberResponse>> createMember(@RequestBody MemberRequest memberRequest) {
-		MemberResponse memberResponse = MemberResponse.of(
-			memberService.createMember(memberRequest.toCreateMemberDto())
-		);
+    @PostMapping("/members")
+    public ResponseEntity<ApiResult<MemberResponse>> createMember(@RequestBody MemberRequest memberRequest) {
+        MemberResponse memberResponse = MemberResponse.of(
+                memberService.createMember(memberRequest.toCreateMemberDto())
+        );
 
-		return ResponseEntity.created(URI.create("/members/" + memberResponse.getMemberId()))
-			.body(ApiResult.succeed(memberResponse));
-	}
+        return ResponseEntity.created(URI.create("/members/" + memberResponse.getMemberId()))
+                .body(ApiResult.succeed(memberResponse));
+    }
 
-	@PostMapping("/login")
-	public ResponseEntity<ApiResult<LoginResponse>> login(@RequestBody LoginRequest loginRequest) {
-		LoginResponse loginResponse = LoginResponse.of(memberService.login(loginRequest.toLoginDto()));
-		return ResponseEntity.ok(ApiResult.succeed(loginResponse));
-	}
+    @PostMapping("/login")
+    public ResponseEntity<ApiResult<LoginResponse>> login(@RequestBody LoginRequest loginRequest) {
+        LoginResponse loginResponse = LoginResponse.of(memberService.login(loginRequest.toLoginDto()));
+        return ResponseEntity.ok(ApiResult.succeed(loginResponse));
+    }
 
-	@GetMapping("/members/email")
-	public ResponseEntity<Void> duplicateEmail(@RequestParam String email) {
-		if (memberService.isDuplicateEmail(email)) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
+    @GetMapping("/members/email")
+    public ResponseEntity<Void> duplicateEmail(@RequestParam String email) {
+        if (memberService.isDuplicateEmail(email)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
-	@GetMapping("/members/nickname")
-	public ResponseEntity<Void> duplicateNickname(@RequestParam String nickname) {
-		if (memberService.isDuplicateNickname(nickname)) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
+    @GetMapping("/members/nickname")
+    public ResponseEntity<Void> duplicateNickname(@RequestParam String nickname) {
+        if (memberService.isDuplicateNickname(nickname)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

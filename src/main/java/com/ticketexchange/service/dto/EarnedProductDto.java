@@ -6,40 +6,42 @@ import com.ticketexchange.domain.EarnedProduct;
 import com.ticketexchange.domain.Product;
 
 public class EarnedProductDto {
-	private Long earnedProductId;
-	private Long productId;
-	private String name;
-	private LocalDateTime createdAt;
 
-	protected EarnedProductDto() {
-	}
+    private Long earnedProductId;
+    private Long productId;
+    private String name;
+    private LocalDateTime createdAt;
 
-	public EarnedProductDto(Long earnedProductId, Long productId, String name, LocalDateTime createdAt) {
-		this.earnedProductId = earnedProductId;
-		this.productId = productId;
-		this.name = name;
-		this.createdAt = createdAt;
-	}
+    protected EarnedProductDto() {
+    }
 
-	public static EarnedProductDto of(EarnedProduct earnedProduct) {
-		Product product = earnedProduct.getProduct();
-		return new EarnedProductDto(earnedProduct.getId(), product.getId(), product.getName(),
-			earnedProduct.getCreatedAt());
-	}
+    public EarnedProductDto(Long earnedProductId, Long productId, String name, LocalDateTime createdAt) {
+        this.earnedProductId = earnedProductId;
+        this.productId = productId;
+        this.name = name;
+        this.createdAt = createdAt;
+    }
 
-	public Long getEarnedProductId() {
-		return earnedProductId;
-	}
+    public static EarnedProductDto of(EarnedProduct earnedProduct) {
+        Product product = earnedProduct.getProduct();
+        return new EarnedProductDto(earnedProduct.getId(), product.getId(), product.getName(),
+                earnedProduct.getCreatedAt()
+        );
+    }
 
-	public Long getProductId() {
-		return productId;
-	}
+    public Long getEarnedProductId() {
+        return earnedProductId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getProductId() {
+        return productId;
+    }
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }

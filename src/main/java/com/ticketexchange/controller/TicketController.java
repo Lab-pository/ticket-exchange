@@ -21,29 +21,30 @@ import com.ticketexchange.support.web.ApiResult;
 @RequestMapping("/api/v1/tickets")
 public class TicketController {
 
-	private final TicketService ticketService;
+    private final TicketService ticketService;
 
-	public TicketController(TicketService ticketService) {
-		this.ticketService = ticketService;
-	}
+    public TicketController(TicketService ticketService) {
+        this.ticketService = ticketService;
+    }
 
-	@PostMapping
-	public ResponseEntity<ApiResult<TicketResponse>> createTicket(
-		@CurrentUser MemberToken token,
-		@RequestBody TicketRequest ticketRequest) {
-		TicketResponse ticketResponse = TicketResponse.of(
-			ticketService.createTicket(token, ticketRequest.toCreateTicketDto()));
+    @PostMapping
+    public ResponseEntity<ApiResult<TicketResponse>> createTicket(
+            @CurrentUser MemberToken token,
+            @RequestBody TicketRequest ticketRequest
+    ) {
+        TicketResponse ticketResponse = TicketResponse.of(
+                ticketService.createTicket(token, ticketRequest.toCreateTicketDto()));
 
-		return ResponseEntity.created(URI.create("/tickets"))
-			.body(ApiResult.succeed(ticketResponse));
-	}
+        return ResponseEntity.created(URI.create("/tickets"))
+                .body(ApiResult.succeed(ticketResponse));
+    }
 
-	@GetMapping
-	public ResponseEntity<ApiResult<TicketDetailsResponses>> findAllTicketsByMember(
-		@CurrentUser MemberToken token
-	) {
-		return ResponseEntity.ok(
-			ApiResult.succeed(TicketDetailsResponses.of(ticketService.findAllTicketsByMember(token)))
-		);
-	}
+    @GetMapping
+    public ResponseEntity<ApiResult<TicketDetailsResponses>> findAllTicketsByMember(
+            @CurrentUser MemberToken token
+    ) {
+        return ResponseEntity.ok(
+                ApiResult.succeed(TicketDetailsResponses.of(ticketService.findAllTicketsByMember(token)))
+        );
+    }
 }

@@ -6,21 +6,22 @@ import com.ticketexchange.service.dto.TokenDto;
 import com.ticketexchange.utils.JsonUtils;
 
 public class LoginResponse {
-	private String token;
 
-	protected LoginResponse() {
-	}
+    private String token;
 
-	public LoginResponse(String token) {
-		this.token = token;
-	}
+    protected LoginResponse() {
+    }
 
-	public static LoginResponse of(TokenDto tokenDto) {
-		String token = JsonUtils.toJson(tokenDto);
-		return new LoginResponse(Base64.getEncoder().encodeToString(token.getBytes()));
-	}
+    public LoginResponse(String token) {
+        this.token = token;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public static LoginResponse of(TokenDto tokenDto) {
+        String token = JsonUtils.toJson(tokenDto);
+        return new LoginResponse(Base64.getEncoder().encodeToString(token.getBytes()));
+    }
+
+    public String getToken() {
+        return token;
+    }
 }
