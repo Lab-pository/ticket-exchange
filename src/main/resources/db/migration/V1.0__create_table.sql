@@ -1,8 +1,3 @@
-drop table if exists member;
-drop table if exists product;
-drop table if exists earned_product;
-drop table if exists ticket;
-
 create table member
 (
     member_id bigint primary key not null auto_increment comment 'PK',
@@ -42,5 +37,5 @@ create table ticket
     member_id      bigint             not null comment '회원 ID',
     constraint fk_ticket_member_id foreign key (member_id) references member (member_id) on delete restrict on update restrict
 );
-alter table if exists member add constraint email_unique unique (email);
-alter table if exists member add constraint nickname_unique unique (nickname);
+alter table member add constraint email_unique unique (email);
+alter table member add constraint nickname_unique unique (nickname);
