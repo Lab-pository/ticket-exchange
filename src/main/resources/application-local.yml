@@ -1,31 +1,13 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
   jpa:
-    database: h2
-    open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        jdbc:
-          batch_size: 1000
+      ddl-auto: validate
   datasource:
-    driver-class-name: org.h2.Driver
-    url: "jdbc:h2:mem:ticket_exchange;MODE=MYSQL;DB_CLOSE_DELAY=-1"
-    username: sa
-    password:
-    hikari:
-      minimum-idle: 1
-      maximum-pool-size: 5
-      pool-name: H2_DB
-  sql:
-    init:
-      platform: h2
-      encoding: UTF-8
-      schema-locations: classpath:schema-h2.sql
-      data-locations: classpath:data-h2.sql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/ticket_exchange"
+    username: user
+    password: password
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
