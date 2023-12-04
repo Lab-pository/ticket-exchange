@@ -2,8 +2,6 @@ package com.ticketexchange.controller;
 
 import java.net.URI;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +22,6 @@ import com.ticketexchange.support.web.ApiResult;
 @RequestMapping("/api/v1")
 public class MemberController {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
     private final MemberService memberService;
 
     public MemberController(MemberService memberService) {
