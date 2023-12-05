@@ -51,4 +51,8 @@ public class ProductRequest {
     public LocalDate getEndDate() {
         return endDate;
     }
+
+    public double getProbability() {
+        return this.probability;
+    }
 }
