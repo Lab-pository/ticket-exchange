@@ -21,7 +21,7 @@ public class EarnedProductResponse {
         this.createdAt = createdAt;
     }
 
-    public static EarnedProductResponse of(EarnedProductDto earnedProductDto) {
+    public static EarnedProductResponse from(EarnedProductDto earnedProductDto) {
         return new EarnedProductResponse(earnedProductDto.getEarnedProductId(), earnedProductDto.getProductId(),
                 earnedProductDto.getName(), earnedProductDto.getCreatedAt()
         );

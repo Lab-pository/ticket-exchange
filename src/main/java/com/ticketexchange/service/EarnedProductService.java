@@ -21,6 +21,6 @@ public class EarnedProductService {
 
     @Transactional(readOnly = true)
     public List<EarnedProductDto> getEarnedProducts(MemberToken token) {
-        return earnedProductRepository.findAllByAcquiredById(token.getId()).stream().map(EarnedProductDto::of).toList();
+        return earnedProductRepository.findAllByAcquiredById(token.getId()).stream().map(EarnedProductDto::from).toList();
     }
 }

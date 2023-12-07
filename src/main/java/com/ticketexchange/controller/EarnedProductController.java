@@ -28,7 +28,7 @@ public class EarnedProductController {
             @CurrentUser MemberToken token
     ) {
         return ResponseEntity.ok(ApiResult.succeed(
-                earnedProductService.getEarnedProducts(token).stream().map(EarnedProductResponse::of).toList()
+                earnedProductService.getEarnedProducts(token).stream().map(EarnedProductResponse::from).toList()
         ));
     }
 

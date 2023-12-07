@@ -32,7 +32,7 @@ public class ProductResponse {
         this.probability = probability;
     }
 
-    public static ProductResponse of(ProductDto productDto) {
+    public static ProductResponse from(ProductDto productDto) {
         return new ProductResponse(productDto.getProductId(), productDto.getName(), productDto.getValidStartDate(),
                 productDto.getValidEndDate(), productDto.getTotalQuantity(), productDto.getRemainQuantity(),
                 productDto.getNeedTicketCount(), productDto.getProbability()

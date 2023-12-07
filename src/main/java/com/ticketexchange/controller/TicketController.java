@@ -32,7 +32,7 @@ public class TicketController {
             @CurrentUser MemberToken token,
             @RequestBody TicketRequest ticketRequest
     ) {
-        TicketResponse ticketResponse = TicketResponse.of(
+        TicketResponse ticketResponse = TicketResponse.from(
                 ticketService.createTicket(token, ticketRequest.toCreateTicketDto()));
 
         return ResponseEntity.created(URI.create("/tickets"))
@@ -44,7 +44,7 @@ public class TicketController {
             @CurrentUser MemberToken token
     ) {
         return ResponseEntity.ok(
-                ApiResult.succeed(TicketDetailsResponses.of(ticketService.findAllTicketsByMember(token)))
+                ApiResult.succeed(TicketDetailsResponses.from(ticketService.findAllTicketsByMember(token)))
         );
     }
 }

@@ -22,7 +22,7 @@ public class EarnedProductDto {
         this.createdAt = createdAt;
     }
 
-    public static EarnedProductDto of(EarnedProduct earnedProduct) {
+    public static EarnedProductDto from(EarnedProduct earnedProduct) {
         Product product = earnedProduct.getProduct();
         return new EarnedProductDto(earnedProduct.getId(), product.getId(), product.getName(),
                 earnedProduct.getCreatedAt()

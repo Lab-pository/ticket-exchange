@@ -36,11 +36,11 @@ public class TicketService {
             tickets.add(ticket);
         }
         ticketRepository.saveAll(tickets);
-        return TicketDto.of(ticket);
+        return TicketDto.from(ticket);
     }
 
     public List<TicketDetailsDto> findAllTicketsByMember(MemberToken token) {
         List<Ticket> tickets = ticketRepository.findAllByMemberId(token.getId());
-        return tickets.stream().map(TicketDetailsDto::of).toList();
+        return tickets.stream().map(TicketDetailsDto::from).toList();
     }
 }

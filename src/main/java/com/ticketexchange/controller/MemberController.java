@@ -30,7 +30,7 @@ public class MemberController {
 
     @PostMapping("/members")
     public ResponseEntity<ApiResult<MemberResponse>> createMember(@RequestBody MemberRequest memberRequest) {
-        MemberResponse memberResponse = MemberResponse.of(
+        MemberResponse memberResponse = MemberResponse.from(
                 memberService.createMember(memberRequest.toCreateMemberDto())
         );
 
@@ -40,7 +40,7 @@ public class MemberController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResult<LoginResponse>> login(@RequestBody LoginRequest loginRequest) {
-        LoginResponse loginResponse = LoginResponse.of(memberService.login(loginRequest.toLoginDto()));
+        LoginResponse loginResponse = LoginResponse.from(memberService.login(loginRequest.toLoginDto()));
         return ResponseEntity.ok(ApiResult.succeed(loginResponse));
     }
 

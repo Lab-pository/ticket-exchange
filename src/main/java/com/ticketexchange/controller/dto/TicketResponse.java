@@ -19,7 +19,7 @@ public class TicketResponse {
         this.expireDate = expireDate;
     }
 
-    public static TicketResponse of(TicketDto ticketDto) {
+    public static TicketResponse from(TicketDto ticketDto) {
         return new TicketResponse(ticketDto.getHowToAcquire(), ticketDto.getAcquireDate(), ticketDto.getExpireDate());
     }
 

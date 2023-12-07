@@ -16,7 +16,7 @@ public class ApplyProductDto {
     }
 
     public static ApplyProductDto of(boolean result, Product product) {
-        return new ApplyProductDto(result, ProductDto.of(product));
+        return new ApplyProductDto(result, ProductDto.from(product));
     }
 
     public boolean isResult() {
