@@ -16,10 +16,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     @Query("select p from Product p where p.id = :id")
-    Optional<Product> findByIdWithPessimisticLock(Long id);
+    Optional<Product> findByIdWithPessimisticLock(final Long id);
 
+    @Query("select p from Product p where p.validDate.endDate >= :endDate and p.validDate.startDate <= :startDate")
     List<Product> findAllByValidStartDateLessThanEqualAndValidEndDateGreaterThanEqual(
-            LocalDate startDate,
-            LocalDate endDate
+            final LocalDate startDate,
+            final LocalDate endDate
     );
 }
