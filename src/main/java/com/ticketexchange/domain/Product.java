@@ -3,10 +3,14 @@ package com.ticketexchange.domain;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import com.ticketexchange.domain.vo.Probability;
+import com.ticketexchange.domain.vo.ValidDate;
 
 @Entity
 public class Product {
@@ -24,58 +28,61 @@ public class Product {
 
     private Integer needTicketCount;
 
-    private LocalDate validStartDate;
+    @Embedded
+    private ValidDate validDate;
 
-    private LocalDate validEndDate;
-
-    private Double probability;
+    @Embedded
+    private Probability probability;
 
     protected Product() {
     }
 
     public Product(
-            String name, Integer totalQuantity, Integer needTicketCount, LocalDate validStartDate,
-            LocalDate validEndDate, Double probability
+            String name,
+            Integer totalQuantity,
+            Integer needTicketCount,
+            LocalDate startDate,
+            LocalDate endDate,
+            Double probability
     ) {
         this.name = name;
         this.totalQuantity = totalQuantity;
         this.remainQuantity = totalQuantity;
         this.needTicketCount = needTicketCount;
-        this.validStartDate = validStartDate;
-        this.validEndDate = validEndDate;
-        this.probability = probability;
+        this.validDate = new ValidDate(startDate, endDate);
+        this.probability = new Probability(probability);
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Integer getTotalQuantity() {
-        return totalQuantity;
+        return this.totalQuantity;
     }
 
     public Integer getRemainQuantity() {
-        return remainQuantity;
+        return this.remainQuantity;
     }
 
     public Integer getNeedTicketCount() {
-        return needTicketCount;
+        return this.needTicketCount;
     }
 
     public LocalDate getValidStartDate() {
-        return validStartDate;
+        return this.validDate.getStartDate();
     }
 
     public LocalDate getValidEndDate() {
-        return validEndDate;
+        return this.validDate.getEndDate();
     }
 
     public Double getProbability() {
-        return probability;
+        return this.probability.getValue();
     }
 
     public void decreaseRemainQuantity() {
