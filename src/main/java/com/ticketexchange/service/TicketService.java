@@ -1,8 +1,8 @@
 package com.ticketexchange.service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,24 +23,23 @@ public class TicketService {
     private final MemberRepository memberRepository;
     private final TicketRepository ticketRepository;
 
-    public TicketService(MemberRepository memberRepository, TicketRepository ticketRepository) {
+    public TicketService(final MemberRepository memberRepository, final TicketRepository ticketRepository) {
         this.memberRepository = memberRepository;
         this.ticketRepository = ticketRepository;
     }
 
-    public TicketDto createTicket(MemberToken token, CreateTicketDto createTicketDto) {
-        Member member = memberRepository.findById(token.getId()).orElseThrow(IllegalArgumentException::new);
-        List<Ticket> tickets = new ArrayList<>();
-        Ticket ticket = createTicketDto.toEntity(member, LocalDate.now());
-        for (int i = 0; i < createTicketDto.getCount(); i++) {
-            tickets.add(ticket);
-        }
+    public TicketDto createTicket(final MemberToken token, final CreateTicketDto createTicketDto) {
+        final Member member = memberRepository.findById(token.getId()).orElseThrow(IllegalArgumentException::new);
+        final Ticket ticket = createTicketDto.toEntity(member, LocalDate.now());
+        final List<Ticket> tickets = IntStream.range(0, createTicketDto.getCount()).mapToObj(i -> ticket).toList();
         ticketRepository.saveAll(tickets);
+
         return TicketDto.from(ticket);
     }
 
-    public List<TicketDetailsDto> findAllTicketsByMember(MemberToken token) {
-        List<Ticket> tickets = ticketRepository.findAllByMemberId(token.getId());
+    public List<TicketDetailsDto> findAllTicketsByMember(final MemberToken token) {
+        final List<Ticket> tickets = ticketRepository.findAllByMemberId(token.getId());
+
         return tickets.stream().map(TicketDetailsDto::from).toList();
     }
 }

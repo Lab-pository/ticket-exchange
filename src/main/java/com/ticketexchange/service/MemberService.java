@@ -1,8 +1,8 @@
 package com.ticketexchange.service;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,27 +27,26 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final TicketRepository ticketRepository;
 
-    public MemberService(MemberRepository memberRepository, TicketRepository ticketRepository) {
+    public MemberService(final MemberRepository memberRepository, final TicketRepository ticketRepository) {
         this.memberRepository = memberRepository;
         this.ticketRepository = ticketRepository;
     }
 
-    public MemberDto createMember(CreateMemberDto createMemberDto) {
-        Member member = memberRepository.save(createMemberDto.toEntity());
+    public MemberDto createMember(final CreateMemberDto createMemberDto) {
+        final Member member = memberRepository.save(createMemberDto.toEntity());
         createWelcomeTickets(member);
         return MemberDto.from(member);
     }
 
-    private void createWelcomeTickets(Member member) {
-        List<Ticket> welcomeTickets = new ArrayList<>();
-        for (int i = 0; i < WELCOME_TICKET_COUNT; i++) {
-            welcomeTickets.add(new Ticket(member, WELCOME_TICKET_MESSAGE));
-        }
+    private void createWelcomeTickets(final Member member) {
+        final List<Ticket> welcomeTickets = IntStream.range(0, WELCOME_TICKET_COUNT)
+                .mapToObj(i -> new Ticket(member, WELCOME_TICKET_MESSAGE))
+                .toList();
         ticketRepository.saveAll(welcomeTickets);
     }
 
-    public TokenDto login(LoginDto loginDto) {
-        Member member = memberRepository.findByEmail(loginDto.getEmail())
+    public TokenDto login(final LoginDto loginDto) {
+        final Member member = memberRepository.findByEmail(loginDto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
         if (member.getPassword().equals(loginDto.getPassword())) {
             return TokenDto.of(member.getId(), getExpireTime());
@@ -60,12 +59,12 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public boolean isDuplicateEmail(String email) {
+    public boolean isDuplicateEmail(final String email) {
         return memberRepository.existsByEmail(email);
     }
 
     @Transactional(readOnly = true)
-    public boolean isDuplicateNickname(String nickname) {
+    public boolean isDuplicateNickname(final String nickname) {
         return memberRepository.existsByNickname(nickname);
     }
 }

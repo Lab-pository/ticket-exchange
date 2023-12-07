@@ -15,12 +15,15 @@ public class EarnedProductService {
 
     private final EarnedProductRepository earnedProductRepository;
 
-    public EarnedProductService(EarnedProductRepository earnedProductRepository) {
+    public EarnedProductService(final EarnedProductRepository earnedProductRepository) {
         this.earnedProductRepository = earnedProductRepository;
     }
 
     @Transactional(readOnly = true)
-    public List<EarnedProductDto> getEarnedProducts(MemberToken token) {
-        return earnedProductRepository.findAllByAcquiredById(token.getId()).stream().map(EarnedProductDto::from).toList();
+    public List<EarnedProductDto> getEarnedProducts(final MemberToken token) {
+        return earnedProductRepository.findAllByAcquiredById(token.getId())
+                .stream()
+                .map(EarnedProductDto::from)
+                .toList();
     }
 }
