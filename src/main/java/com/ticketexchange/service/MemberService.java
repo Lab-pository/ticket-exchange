@@ -35,7 +35,7 @@ public class MemberService {
     public MemberDto createMember(CreateMemberDto createMemberDto) {
         Member member = memberRepository.save(createMemberDto.toEntity());
         createWelcomeTickets(member);
-        return MemberDto.of(member);
+        return MemberDto.from(member);
     }
 
     private void createWelcomeTickets(Member member) {

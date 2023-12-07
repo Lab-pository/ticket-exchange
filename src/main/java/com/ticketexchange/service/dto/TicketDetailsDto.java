@@ -30,7 +30,7 @@ public class TicketDetailsDto {
         this.useDate = useDate;
     }
 
-    public static TicketDetailsDto of(Ticket ticket) {
+    public static TicketDetailsDto from(Ticket ticket) {
         return new TicketDetailsDto(ticket.getId(), ticket.getHowToAcquire(), ticket.getAcquireDate(),
                 ticket.getExpireDate(), ticket.isUsed(), ticket.getHowToUse(), ticket.getUsedDate()
         );

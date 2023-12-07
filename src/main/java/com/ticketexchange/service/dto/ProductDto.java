@@ -32,7 +32,7 @@ public class ProductDto {
         this.probability = probability;
     }
 
-    public static ProductDto of(Product product) {
+    public static ProductDto from(Product product) {
         return new ProductDto(product.getId(), product.getName(), product.getValidStartDate(),
                 product.getValidEndDate(), product.getTotalQuantity(), product.getRemainQuantity(),
                 product.getNeedTicketCount(), product.getProbability()

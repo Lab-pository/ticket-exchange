@@ -26,14 +26,14 @@ public class TicketDetailsResponses {
         this.tickets = tickets;
     }
 
-    public static TicketDetailsResponses of(List<TicketDetailsDto> ticketDtoList) {
+    public static TicketDetailsResponses from(List<TicketDetailsDto> ticketDtoList) {
         int totalTicketCount = ticketDtoList.size();
         int validTicketCount = 0;
         int useTicketCount = 0;
         int expiredTicketCount = 0;
         List<TicketDetailsResponse> tickets = new ArrayList<>();
         for (TicketDetailsDto ticketDto : ticketDtoList) {
-            tickets.add(TicketDetailsResponse.of(ticketDto));
+            tickets.add(TicketDetailsResponse.from(ticketDto));
             if (ticketDto.isUsed()) {
                 useTicketCount++;
             } else {

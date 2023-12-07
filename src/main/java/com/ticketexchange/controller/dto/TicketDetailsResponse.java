@@ -30,7 +30,7 @@ public class TicketDetailsResponse {
         this.useDate = useDate;
     }
 
-    public static TicketDetailsResponse of(TicketDetailsDto ticketDetailsDto) {
+    public static TicketDetailsResponse from(TicketDetailsDto ticketDetailsDto) {
         return new TicketDetailsResponse(ticketDetailsDto.getTicketId(), ticketDetailsDto.getHowToAcquire(),
                 ticketDetailsDto.getAcquireDate(), ticketDetailsDto.getExpireDate(), ticketDetailsDto.isUsed(),
                 ticketDetailsDto.getHowToUse(), ticketDetailsDto.getUseDate()

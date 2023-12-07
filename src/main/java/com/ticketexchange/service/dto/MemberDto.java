@@ -17,7 +17,7 @@ public class MemberDto {
         this.nickname = nickname;
     }
 
-    public static MemberDto of(Member member) {
+    public static MemberDto from(Member member) {
         return new MemberDto(member.getId(), member.getEmail(), member.getNickname());
     }
 

@@ -15,9 +15,9 @@ public class ApplyProductResponse {
         this.product = product;
     }
 
-    public static ApplyProductResponse of(ApplyProductDto applyProductDto) {
+    public static ApplyProductResponse from(ApplyProductDto applyProductDto) {
         return new ApplyProductResponse(applyProductDto.isResult(),
-                ProductResponse.of(applyProductDto.getProductDto())
+                ProductResponse.from(applyProductDto.getProductDto())
         );
     }
 

@@ -16,7 +16,7 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public static LoginResponse of(TokenDto tokenDto) {
+    public static LoginResponse from(TokenDto tokenDto) {
         String token = JsonUtils.toJson(tokenDto);
         return new LoginResponse(Base64.getEncoder().encodeToString(token.getBytes()));
     }
