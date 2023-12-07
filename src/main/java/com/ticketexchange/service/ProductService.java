@@ -34,8 +34,10 @@ public class ProductService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     public ProductService(
-            MemberRepository memberRepository, TicketRepository ticketRepository,
-            ProductRepository productRepository, EarnedProductRepository earnedProductRepository
+            final MemberRepository memberRepository,
+            final TicketRepository ticketRepository,
+            final ProductRepository productRepository,
+            final EarnedProductRepository earnedProductRepository
     ) {
         this.memberRepository = memberRepository;
         this.ticketRepository = ticketRepository;
@@ -43,16 +45,17 @@ public class ProductService {
         this.earnedProductRepository = earnedProductRepository;
     }
 
-    public ProductDto registerProduct(CreateProductDto createProductDto) {
-        Product product = productRepository.save(createProductDto.toEntity());
-        return ProductDto.of(product);
+    public ProductDto registerProduct(final CreateProductDto createProductDto) {
+        final Product product = productRepository.save(createProductDto.toEntity());
+        return ProductDto.from(product);
     }
 
-    public ApplyProductDto applyProduct(MemberToken token, Long productId, LocalDate now) {
-        Product product = productRepository.findByIdWithPessimisticLock(productId)
+    public ApplyProductDto applyProduct(final MemberToken token, final Long productId) {
+        final LocalDate now = LocalDate.now();
+        final Product product = productRepository.findByIdWithPessimisticLock(productId)
                 .orElseThrow(IllegalArgumentException::new);
-        Long memberId = token.getId();
-        int neededTicketCount = product.getNeedTicketCount();
+        final Long memberId = token.getId();
+        final int neededTicketCount = product.getNeedTicketCount();
         if (!hasEnoughTicket(neededTicketCount, memberId, now) || notEnoughProduct(product.getRemainQuantity())
                 || notWinningProduct(product.getProbability())) {
             return ApplyProductDto.of(false, product);
@@ -63,26 +66,31 @@ public class ProductService {
         return ApplyProductDto.of(true, product);
     }
 
-    private boolean notWinningProduct(double productProbability) {
-        double probability = ThreadLocalRandom.current().nextDouble();
+    private boolean notWinningProduct(final double productProbability) {
+        final double probability = ThreadLocalRandom.current().nextDouble();
         log.info("productProbability: {}, probability: {}", productProbability, probability);
         return productProbability < probability;
     }
 
-    private boolean notEnoughProduct(int remainQuantity) {
+    private boolean notEnoughProduct(final int remainQuantity) {
         return remainQuantity <= 0;
     }
 
-    private void useTicketForProduct(Long memberId, LocalDate now, int neededTicketCount, String productName) {
-        boolean notUsed = false;
-        List<Ticket> tickets = ticketRepository.findAllByMemberIdAndExpireDateGreaterThanEqualAndIsUsed(memberId, now,
-                notUsed, sortAcquiredDateAsc()
+    private void useTicketForProduct(
+            final Long memberId,
+            final LocalDate now,
+            final int neededTicketCount,
+            final String productName
+    ) {
+        final boolean notUsed = false;
+        final List<Ticket> tickets = ticketRepository.findAllByMemberIdAndExpireDateGreaterThanEqualAndIsUsed(
+                memberId, now, notUsed, sortAcquiredDateAsc()
         ).subList(0, neededTicketCount);
         tickets.forEach(t -> t.use(productName));
     }
 
-    private void memberEarnedProduct(Long memberId, Product product) {
-        Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
+    private void memberEarnedProduct(final Long memberId, final Product product) {
+        final Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
         earnedProductRepository.save(new EarnedProduct(member, product));
     }
 
@@ -90,14 +98,15 @@ public class ProductService {
         return Sort.by("acquireDate").ascending();
     }
 
-    private boolean hasEnoughTicket(int neededTicketCount, Long memberId, LocalDate now) {
+    private boolean hasEnoughTicket(final int neededTicketCount, final Long memberId, final LocalDate now) {
         return neededTicketCount <= ticketRepository.countByMemberIdAndExpireDateGreaterThanEqual(memberId, now);
     }
 
     @Transactional(readOnly = true)
-    public List<ProductDto> findAllValidProducts(LocalDate now) {
-        List<Product> products = productRepository
+    public List<ProductDto> findAllValidProducts() {
+        final LocalDate now = LocalDate.now();
+        final List<Product> products = productRepository
                 .findAllByValidStartDateLessThanEqualAndValidEndDateGreaterThanEqual(now, now);
-        return products.stream().map(ProductDto::of).toList();
+        return products.stream().map(ProductDto::from).toList();
     }
 }
