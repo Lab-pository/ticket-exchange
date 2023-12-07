@@ -1,7 +1,6 @@
 package com.ticketexchange.controller;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ticketexchange.auth.CurrentUser;
@@ -33,7 +31,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ApiResult<ProductResponse>> registerProduct(@RequestBody ProductRequest productRequest) {
-        ProductResponse productResponse = ProductResponse.of(
+        ProductResponse productResponse = ProductResponse.from(
                 productService.registerProduct(productRequest.toCreateProductDto())
         );
 
@@ -44,19 +42,17 @@ public class ProductController {
     @PostMapping("/{productId}")
     public ResponseEntity<ApiResult<ApplyProductResponse>> applyProduct(
             @CurrentUser MemberToken token,
-            @PathVariable Long productId,
-            @RequestParam LocalDate now
+            @PathVariable Long productId
     ) {
-        return ResponseEntity.ok(ApiResult.succeed(
-                ApplyProductResponse.of(productService.applyProduct(token, productId, now))
-        ));
+        return ResponseEntity.ok(
+                ApiResult.succeed(ApplyProductResponse.from(productService.applyProduct(token, productId))));
     }
 
     @GetMapping
-    public ResponseEntity<ApiResult<List<ProductResponse>>> findAllValidProducts(@RequestParam LocalDate now) {
-        List<ProductResponse> productResponses = productService.findAllValidProducts(now)
+    public ResponseEntity<ApiResult<List<ProductResponse>>> findAllValidProducts() {
+        List<ProductResponse> productResponses = productService.findAllValidProducts()
                 .stream()
-                .map(ProductResponse::of)
+                .map(ProductResponse::from)
                 .toList();
 
         return ResponseEntity.ok(ApiResult.succeed(productResponses));
