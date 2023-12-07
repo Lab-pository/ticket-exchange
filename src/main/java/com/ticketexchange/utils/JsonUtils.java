@@ -2,7 +2,10 @@ package com.ticketexchange.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JsonUtils {
+public final class JsonUtils {
+
+    private JsonUtils() {
+    }
 
     private static final ObjectMapper om = new ObjectMapper();
 
