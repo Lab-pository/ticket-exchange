@@ -13,8 +13,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     long countByMemberIdAndExpireDateGreaterThanEqual(Long memberId, LocalDate expireDate);
 
     List<Ticket> findAllByMemberIdAndExpireDateGreaterThanEqualAndIsUsed(
-            Long memberId, LocalDate expireDate, boolean used, Sort sort
+            final Long memberId, final LocalDate expireDate, final boolean used, final Sort sort
     );
 
-    List<Ticket> findAllByMemberId(Long memberId);
+    List<Ticket> findAllByMemberId(final Long memberId);
 }

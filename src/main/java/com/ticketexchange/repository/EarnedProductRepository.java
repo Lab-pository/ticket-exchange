@@ -10,5 +10,5 @@ import com.ticketexchange.domain.EarnedProduct;
 public interface EarnedProductRepository extends JpaRepository<EarnedProduct, Long> {
 
     @EntityGraph(attributePaths = {"product"})
-    List<EarnedProduct> findAllByAcquiredById(Long acquiredById);
+    List<EarnedProduct> findAllByAcquiredById(final Long acquiredById);
 }
