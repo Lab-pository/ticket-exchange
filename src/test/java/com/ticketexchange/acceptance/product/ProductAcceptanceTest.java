@@ -9,8 +9,6 @@ import static com.ticketexchange.fixture.ProductFixture.상품_생성_요청;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
-
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Nested;
@@ -49,11 +47,9 @@ class ProductAcceptanceTest extends AcceptanceTest {
             회원가입();
             final var 토큰 = 로그인().body().jsonPath().getString("data.token");
             final var 상품_ID = 상품_생성(당첨되는_상품_생성_요청()).body().jsonPath().getLong("data.productId");
-            final var 요청시점 = LocalDate.of(2023, 12, 31).toString();
 
             final var 응답 = given()
                     .header(new Header("X-AUTH-TOKEN", 토큰))
-                    .queryParam("now", 요청시점)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .when()
@@ -69,11 +65,9 @@ class ProductAcceptanceTest extends AcceptanceTest {
             회원가입();
             final var 토큰 = 로그인().body().jsonPath().getString("data.token");
             final var 상품_ID = 상품_생성(당첨되지_않는_상품_생성_요청()).body().jsonPath().getLong("data.productId");
-            final var 요청시점 = LocalDate.of(2023, 12, 31).toString();
 
             final var 응답 = given()
                     .header(new Header("X-AUTH-TOKEN", 토큰))
-                    .queryParam("now", 요청시점)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .accept(MediaType.APPLICATION_JSON_VALUE)
                     .when()
@@ -92,10 +86,8 @@ class ProductAcceptanceTest extends AcceptanceTest {
         void 정상적인_요청인_경우_상품목록을_조회한다() {
             상품_생성();
             상품_생성();
-            final var 요청시점 = LocalDate.of(2023, 12, 31).toString();
 
             final var 응답 = given()
-                    .queryParam("now", 요청시점)
                     .when()
                     .get("/api/v1/products")
                     .then().extract();

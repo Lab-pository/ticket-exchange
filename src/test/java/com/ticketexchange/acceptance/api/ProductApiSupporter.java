@@ -3,8 +3,6 @@ package com.ticketexchange.acceptance.api;
 import static com.ticketexchange.fixture.ProductFixture.상품_생성_요청;
 import static io.restassured.RestAssured.given;
 
-import java.time.LocalDate;
-
 import org.springframework.http.MediaType;
 
 import com.ticketexchange.controller.dto.ProductRequest;
@@ -33,13 +31,8 @@ public final class ProductApiSupporter {
     }
 
     public static ExtractableResponse<Response> 상품_응모(final String 토큰, final Long 상품_ID) {
-        return 상품_응모(토큰, LocalDate.now().toString(), 상품_ID);
-    }
-
-    public static ExtractableResponse<Response> 상품_응모(final String 토큰, final String 요청시점, final Long 상품_ID) {
         return given()
                 .header(new Header("X-AUTH-TOKEN", 토큰))
-                .queryParam("now", 요청시점)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .when()
