@@ -42,15 +42,11 @@ public class Ticket {
     protected Ticket() {
     }
 
-    public Ticket(Member member, String howToAcquire) {
-        LocalDate now = LocalDate.now();
-        this.member = member;
-        this.howToAcquire = howToAcquire;
-        this.acquireDate = now;
-        this.expireDate = now.plusDays(VALID_PERIOD);
+    public Ticket(final Member member, final String howToAcquire) {
+        this(member, howToAcquire, LocalDate.now());
     }
 
-    public Ticket(Member member, String howToAcquire, LocalDate now) {
+    public Ticket(final Member member, final String howToAcquire, final LocalDate now) {
         this.member = member;
         this.howToAcquire = howToAcquire;
         this.acquireDate = now;
