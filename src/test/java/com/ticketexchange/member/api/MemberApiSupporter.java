@@ -1,7 +1,7 @@
-package com.ticketexchange.acceptance.api;
+package com.ticketexchange.member.api;
 
-import static com.ticketexchange.fixture.MemberFixture.로그인_요청;
-import static com.ticketexchange.fixture.MemberFixture.회원가입_요청;
+import static com.ticketexchange.member.fixture.MemberFixture.로그인_요청;
+import static com.ticketexchange.member.fixture.MemberFixture.회원가입_요청;
 import static io.restassured.RestAssured.given;
 
 import org.springframework.http.MediaType;

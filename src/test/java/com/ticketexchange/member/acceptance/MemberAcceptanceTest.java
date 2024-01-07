@@ -1,10 +1,10 @@
-package com.ticketexchange.acceptance.member;
+package com.ticketexchange.member.acceptance;
 
-import static com.ticketexchange.acceptance.api.MemberApiSupporter.회원가입;
-import static com.ticketexchange.fixture.MemberFixture.EMAIL;
-import static com.ticketexchange.fixture.MemberFixture.NICKNAME;
-import static com.ticketexchange.fixture.MemberFixture.로그인_요청;
-import static com.ticketexchange.fixture.MemberFixture.회원가입_요청;
+import static com.ticketexchange.member.api.MemberApiSupporter.회원가입;
+import static com.ticketexchange.member.fixture.MemberFixture.EMAIL;
+import static com.ticketexchange.member.fixture.MemberFixture.NICKNAME;
+import static com.ticketexchange.member.fixture.MemberFixture.로그인_요청;
+import static com.ticketexchange.member.fixture.MemberFixture.회원가입_요청;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
-import com.ticketexchange.acceptance.AcceptanceTest;
+import com.ticketexchange.common.acceptance.AcceptanceTest;
 
 class MemberAcceptanceTest extends AcceptanceTest {
 

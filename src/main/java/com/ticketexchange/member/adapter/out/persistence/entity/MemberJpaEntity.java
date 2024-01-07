@@ -1,4 +1,4 @@
-package com.ticketexchange.domain;
+package com.ticketexchange.member.adapter.out.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,46 +10,51 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(
+        name = "member",
         uniqueConstraints = {
                 @UniqueConstraint(name = "email_unique", columnNames = "email"),
                 @UniqueConstraint(name = "nickname_unique", columnNames = "nickname")
         }
 )
-public class Member {
+public class MemberJpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
+    @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "nickname", nullable = false)
     private String nickname;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
-    protected Member() {
+    protected MemberJpaEntity() {
     }
 
-    public Member(String email, String nickname, String password) {
+    public MemberJpaEntity(final Long id, final String email, final String nickname, final String password) {
+        this.id = id;
         this.email = email;
         this.nickname = nickname;
         this.password = password;
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public String getNickname() {
-        return nickname;
+        return this.nickname;
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 }

@@ -1,4 +1,4 @@
-package com.ticketexchange.controller;
+package com.ticketexchange.member.adapter.in.web;
 
 import java.net.URI;
 
@@ -11,42 +11,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ticketexchange.controller.dto.LoginRequest;
-import com.ticketexchange.controller.dto.LoginResponse;
-import com.ticketexchange.controller.dto.MemberRequest;
-import com.ticketexchange.controller.dto.MemberResponse;
-import com.ticketexchange.service.MemberService;
+import com.ticketexchange.member.adapter.in.web.request.LoginRequest;
+import com.ticketexchange.member.adapter.in.web.request.MemberRequest;
+import com.ticketexchange.member.adapter.in.web.response.LoginResponse;
+import com.ticketexchange.member.adapter.in.web.response.MemberResponse;
+import com.ticketexchange.member.application.port.in.CreateMemberUseCase;
+import com.ticketexchange.member.application.port.in.DuplicateMemberDetailsQuery;
+import com.ticketexchange.member.application.port.in.LoginMemberUseCase;
 import com.ticketexchange.support.web.ApiResult;
 
 @RestController
 @RequestMapping("/api/v1")
 public class MemberController {
 
-    private final MemberService memberService;
+    private final CreateMemberUseCase createMemberUseCase;
+    private final LoginMemberUseCase loginMemberUseCase;
+    private final DuplicateMemberDetailsQuery duplicateMemberDetailsQuery;
 
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
+    public MemberController(
+            final CreateMemberUseCase createMemberUseCase,
+            final LoginMemberUseCase loginMemberUseCase,
+            final DuplicateMemberDetailsQuery duplicateMemberDetailsQuery
+    ) {
+        this.createMemberUseCase = createMemberUseCase;
+        this.loginMemberUseCase = loginMemberUseCase;
+        this.duplicateMemberDetailsQuery = duplicateMemberDetailsQuery;
     }
 
     @PostMapping("/members")
     public ResponseEntity<ApiResult<MemberResponse>> createMember(@RequestBody MemberRequest memberRequest) {
         MemberResponse memberResponse = MemberResponse.from(
-                memberService.createMember(memberRequest.toCreateMemberDto())
-        );
+                createMemberUseCase.createMember(memberRequest.toCreateMemberCommand()));
 
-        return ResponseEntity.created(URI.create("/members/" + memberResponse.getMemberId()))
+        return ResponseEntity.created(URI.create("/members/" + memberResponse.memberId()))
                 .body(ApiResult.succeed(memberResponse));
     }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResult<LoginResponse>> login(@RequestBody LoginRequest loginRequest) {
-        LoginResponse loginResponse = LoginResponse.from(memberService.login(loginRequest.toLoginDto()));
+        LoginResponse loginResponse = LoginResponse.from(loginMemberUseCase.login(loginRequest.toLoginCommand()));
         return ResponseEntity.ok(ApiResult.succeed(loginResponse));
     }
 
     @GetMapping("/members/email")
     public ResponseEntity<Void> duplicateEmail(@RequestParam String email) {
-        if (memberService.isDuplicateEmail(email)) {
+        if (duplicateMemberDetailsQuery.isDuplicateEmail(email)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -54,7 +63,7 @@ public class MemberController {
 
     @GetMapping("/members/nickname")
     public ResponseEntity<Void> duplicateNickname(@RequestParam String nickname) {
-        if (memberService.isDuplicateNickname(nickname)) {
+        if (duplicateMemberDetailsQuery.isDuplicateNickname(nickname)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
