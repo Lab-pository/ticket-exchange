@@ -1,15 +1,13 @@
-package com.ticketexchange.fixture;
+package com.ticketexchange.member.fixture;
 
 import java.time.Instant;
 
-import org.springframework.test.util.ReflectionTestUtils;
-
 import com.ticketexchange.auth.MemberToken;
-import com.ticketexchange.controller.dto.LoginRequest;
-import com.ticketexchange.controller.dto.MemberRequest;
-import com.ticketexchange.domain.Member;
-import com.ticketexchange.service.dto.CreateMemberDto;
-import com.ticketexchange.service.dto.LoginDto;
+import com.ticketexchange.member.adapter.in.web.request.LoginRequest;
+import com.ticketexchange.member.adapter.in.web.request.MemberRequest;
+import com.ticketexchange.member.application.port.in.CreateMemberUseCase.CreateMemberCommand;
+import com.ticketexchange.member.application.port.in.LoginMemberUseCase.LoginCommand;
+import com.ticketexchange.member.domain.Member;
 
 public final class MemberFixture {
 
@@ -38,16 +36,16 @@ public final class MemberFixture {
         return new MemberRequest(email, nickname, password);
     }
 
-    public static CreateMemberDto 회원가입_DTO() {
-        return new CreateMemberDto(EMAIL, NICKNAME, PASSWORD);
+    public static CreateMemberCommand 회원가입_커맨드() {
+        return new CreateMemberCommand(EMAIL, NICKNAME, PASSWORD);
     }
 
-    public static LoginDto 로그인_DTO() {
-        return 로그인_DTO(EMAIL, PASSWORD);
+    public static LoginCommand 로그인_커맨드() {
+        return 로그인_커맨드(EMAIL, PASSWORD);
     }
 
-    public static LoginDto 로그인_DTO(final String email, final String password) {
-        return new LoginDto(email, password);
+    public static LoginCommand 로그인_커맨드(final String email, final String password) {
+        return new LoginCommand(email, password);
     }
 
     public static MemberToken 회원토큰() {
@@ -55,8 +53,6 @@ public final class MemberFixture {
     }
 
     public static Member 회원() {
-        final Member member = new Member(EMAIL, NICKNAME, PASSWORD);
-        ReflectionTestUtils.setField(member, "id", MEMBER_ID);
-        return member;
+        return new Member(MEMBER_ID, EMAIL, NICKNAME, PASSWORD);
     }
 }
