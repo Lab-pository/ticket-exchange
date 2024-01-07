@@ -1,4 +1,4 @@
-package com.ticketexchange.acceptance;
+package com.ticketexchange.common.acceptance;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
