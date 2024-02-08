@@ -5,49 +5,45 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Product {
 
-    private Long id;
-    private String name;
-    private Integer totalQuantity;
-    private Integer remainQuantity;
-    private Integer needTicketCount;
-    private ValidDate validDate;
-    private Probability probability;
+    private final Long id;
+    private final String name;
+    private final Quantity totalQuantity;
+    private Quantity remainQuantity;
+    private final int needTicketCount;
+    private final ValidDate validDate;
+    private final Probability probability;
 
     public Product(
             final Long id,
             final String name,
-            final Integer totalQuantity,
-            final Integer needTicketCount,
+            final int totalQuantity,
+            final int needTicketCount,
             final LocalDate startDate,
             final LocalDate endDate,
             final Double probability
     ) {
         this.id = id;
         this.name = name;
-        this.totalQuantity = totalQuantity;
-        this.remainQuantity = totalQuantity;
+        this.totalQuantity = new Quantity(totalQuantity);
+        this.remainQuantity = new Quantity(totalQuantity);
         this.needTicketCount = needTicketCount;
         this.validDate = new ValidDate(startDate, endDate);
         this.probability = new Probability(probability);
     }
 
     public boolean canApply(final LocalDate now) {
-        return isEnoughQuantity() && validDate.isBetweenInclusive(now);
+        return remainQuantity.isEnough() && validDate.isBetweenInclusive(now);
     }
 
     public void decreaseRemainQuantity() {
-        if (isEnoughQuantity()) {
-            this.remainQuantity--;
+        if (remainQuantity.isEnough()) {
+            this.remainQuantity = this.remainQuantity.decrease();
         }
     }
 
     public boolean isWin() {
         final double randomProbabilityValue = ThreadLocalRandom.current().nextDouble();
         return this.probability.getValue() >= randomProbabilityValue;
-    }
-
-    public boolean isEnoughQuantity() {
-        return this.remainQuantity > 0;
     }
 
     public Long getId() {
@@ -58,15 +54,15 @@ public class Product {
         return this.name;
     }
 
-    public Integer getTotalQuantity() {
-        return this.totalQuantity;
+    public int getTotalQuantity() {
+        return this.totalQuantity.getValue();
     }
 
-    public Integer getRemainQuantity() {
-        return this.remainQuantity;
+    public int getRemainQuantity() {
+        return this.remainQuantity.getValue();
     }
 
-    public Integer getNeedTicketCount() {
+    public int getNeedTicketCount() {
         return this.needTicketCount;
     }
 
