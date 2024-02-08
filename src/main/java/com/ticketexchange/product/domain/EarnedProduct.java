@@ -15,7 +15,7 @@ public class EarnedProduct {
 
     public EarnedProduct(final Long id, final Long memberId, final Product product) {
         this.id = id;
-        this.memberId= memberId;
+        this.memberId = memberId;
         this.product = product;
         this.createdAt = LocalDateTime.now();
     }
