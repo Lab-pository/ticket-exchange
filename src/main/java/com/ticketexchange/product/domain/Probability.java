@@ -2,17 +2,9 @@ package com.ticketexchange.product.domain;
 
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-
-@Embeddable
 public class Probability {
 
-    @Column(name = "probability", nullable = false)
-    private double value;
-
-    protected Probability() {
-    }
+    private final double value;
 
     public Probability(final double value) {
         validate(value);

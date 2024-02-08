@@ -3,20 +3,10 @@ package com.ticketexchange.product.domain;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-
-@Embeddable
 public class ValidDate {
 
-    @Column(name = "valid_start_date", nullable = false)
-    private LocalDate startDate;
-
-    @Column(name = "valid_end_date", nullable = false)
-    private LocalDate endDate;
-
-    protected ValidDate() {
-    }
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
     public ValidDate(final LocalDate startDate, final LocalDate endDate) {
         validateDate(startDate, endDate);
