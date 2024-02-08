@@ -12,19 +12,26 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.event.ApplicationEvents;
+import org.springframework.test.context.event.RecordApplicationEvents;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.ticketexchange.member.application.port.in.CreateMemberUseCase;
 import com.ticketexchange.member.application.port.out.SaveMemberPort;
 import com.ticketexchange.member.application.service.CreateMemberService;
+import com.ticketexchange.member.domain.MemberCreateEvent;
 import com.ticketexchange.ticket.application.port.out.SaveTicketPort;
 
+@RecordApplicationEvents
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = CreateMemberService.class)
 class CreateMemberServiceTest {
 
     @Autowired
     CreateMemberUseCase createMemberUseCase;
+
+    @Autowired
+    ApplicationEvents applicationEvents;
 
     @MockBean
     SaveMemberPort saveMemberPort;
@@ -39,5 +46,14 @@ class CreateMemberServiceTest {
         final var result = createMemberUseCase.createMember(회원가입_커맨드());
 
         assertThat(result.getId()).isEqualTo(MEMBER_ID);
+    }
+
+    @Test
+    void 회원가입_이벤트_발행_테스트() {
+        when(saveMemberPort.save(any())).thenReturn(회원());
+
+        createMemberUseCase.createMember(회원가입_커맨드());
+
+        assertThat(applicationEvents.stream(MemberCreateEvent.class).count()).isEqualTo(1);
     }
 }
