@@ -1,4 +1,4 @@
-package com.ticketexchange.auth;
+package com.ticketlounge.domain.auth;
 
 import java.time.Instant;
 

@@ -1,4 +1,4 @@
-package com.ticketexchange.product.domain.vo;
+package com.ticketexchange.product;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.Test;
 
-import com.ticketexchange.product.domain.Quantity;
+import com.ticketlounge.domain.product.Quantity;
 
 class QuantityTest {
 
