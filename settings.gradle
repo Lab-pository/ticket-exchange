@@ -1,1 +1,16 @@
-rootProject.name = 'ticket-exchange'
+pluginManagement {
+    plugins {
+        id 'org.springframework.boot' version "${springBootVersion}"
+        id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
+        id 'jacoco'
+    }
+}
+
+rootProject.name = 'ticket-lounge'
+
+include("adapter:web")
+include("adapter:persistence")
+include("application")
+include("domain")
+include("configuration")
+include("support:jacoco")
