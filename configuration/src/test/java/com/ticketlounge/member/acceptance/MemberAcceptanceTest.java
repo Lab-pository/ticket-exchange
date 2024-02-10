@@ -1,10 +1,10 @@
-package com.ticketexchange.member.acceptance;
+package com.ticketlounge.member.acceptance;
 
-import static com.ticketexchange.member.api.MemberApiSupporter.회원가입;
-import static com.ticketexchange.member.fixture.MemberFixture.EMAIL;
-import static com.ticketexchange.member.fixture.MemberFixture.NICKNAME;
-import static com.ticketexchange.member.fixture.MemberFixture.로그인_요청;
-import static com.ticketexchange.member.fixture.MemberFixture.회원가입_요청;
+import static com.ticketlounge.member.api.MemberApiSupporter.회원가입;
+import static com.ticketlounge.member.fixture.MemberFixture.EMAIL;
+import static com.ticketlounge.member.fixture.MemberFixture.NICKNAME;
+import static com.ticketlounge.member.fixture.MemberFixture.로그인_요청;
+import static com.ticketlounge.member.fixture.MemberFixture.회원가입_요청;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,9 +13,10 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 
-import com.ticketexchange.common.acceptance.AcceptanceTest;
+import com.ticketlounge.AcceptanceTest.AcceptanceTest;
+
+import io.restassured.http.ContentType;
 
 class MemberAcceptanceTest extends AcceptanceTest {
 
@@ -90,7 +91,7 @@ class MemberAcceptanceTest extends AcceptanceTest {
         void 정상적인_요청인_경우_회원가입에_성공한다() {
             final var 응답 = given()
                     .body(회원가입_요청())
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .contentType(ContentType.JSON)
                     .post("/api/v1/members")
                     .then()
                     .extract();
@@ -108,7 +109,7 @@ class MemberAcceptanceTest extends AcceptanceTest {
             회원가입();
             final var 응답 = given()
                     .body(로그인_요청())
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .contentType(ContentType.JSON)
                     .post("/api/v1/login")
                     .then()
                     .extract();

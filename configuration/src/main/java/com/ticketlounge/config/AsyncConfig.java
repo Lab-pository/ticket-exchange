@@ -1,4 +1,4 @@
-package com.ticketexchange.config;
+package com.ticketlounge.config;
 
 import java.util.concurrent.Executor;
 

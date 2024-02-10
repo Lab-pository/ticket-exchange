@@ -1,10 +1,8 @@
-package com.ticketexchange.product.fixture;
+package com.ticketlounge.product.fixture;
 
 import java.time.LocalDate;
 
-import com.ticketexchange.product.adapter.in.web.request.ProductRequest;
-import com.ticketexchange.product.application.port.in.CreateProductUseCase.CreateProductCommand;
-import com.ticketexchange.product.domain.Product;
+import com.ticketlounge.web.product.request.ProductRequest;
 
 public final class ProductFixture {
 
@@ -44,29 +42,4 @@ public final class ProductFixture {
         );
     }
 
-    public static CreateProductCommand 상품_생성_커맨드() {
-        return new CreateProductCommand(PRODUCT_NAME, NEED_TICKET_COUNT, TOTAL_QUANTITY, START_DATE, END_DATE,
-                PROBABILITY
-        );
-    }
-
-    public static Product 상품() {
-        return new Product(PRODUCT_ID, PRODUCT_NAME, TOTAL_QUANTITY, NEED_TICKET_COUNT, START_DATE,
-                END_DATE,
-                PROBABILITY
-        );
-    }
-
-    public static Product 당첨되는_상품() {
-        return new Product(PRODUCT_ID, PRODUCT_NAME, TOTAL_QUANTITY, NEED_TICKET_COUNT, START_DATE, END_DATE,
-                FULL_PROBABILITY
-        );
-    }
-
-    public static Product 당첨되지_않는_상품() {
-        return new Product(PRODUCT_ID, PRODUCT_NAME, TOTAL_QUANTITY, NEED_TICKET_COUNT, START_DATE,
-                END_DATE,
-                ZERO_PROBABILITY
-        );
-    }
 }

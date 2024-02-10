@@ -1,10 +1,10 @@
-package com.ticketexchange.product.acceptance;
+package com.ticketlounge.product.acceptance;
 
-import static com.ticketexchange.member.api.MemberApiSupporter.로그인;
-import static com.ticketexchange.member.api.MemberApiSupporter.회원가입;
-import static com.ticketexchange.product.api.ProductApiSupporter.상품_생성;
-import static com.ticketexchange.product.api.ProductApiSupporter.상품_응모;
-import static com.ticketexchange.product.fixture.ProductFixture.당첨되는_상품_생성_요청;
+import static com.ticketlounge.member.api.MemberApiSupporter.로그인;
+import static com.ticketlounge.member.api.MemberApiSupporter.회원가입;
+import static com.ticketlounge.product.api.ProductApiSupporter.상품_생성;
+import static com.ticketlounge.product.api.ProductApiSupporter.상품_응모;
+import static com.ticketlounge.product.fixture.ProductFixture.당첨되는_상품_생성_요청;
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import com.ticketexchange.common.acceptance.AcceptanceTest;
+import com.ticketlounge.AcceptanceTest.AcceptanceTest;
 
 import io.restassured.http.Header;
 
