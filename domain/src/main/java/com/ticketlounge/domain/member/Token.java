@@ -1,4 +1,4 @@
-package com.ticketexchange.member.domain;
+package com.ticketlounge.domain.member;
 
 import java.time.Instant;
 

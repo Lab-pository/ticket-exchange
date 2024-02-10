@@ -1,4 +1,4 @@
-package com.ticketexchange.ticket.domain;
+package com.ticketlounge.domain.ticket;
 
 import java.time.LocalDate;
 

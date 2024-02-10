@@ -1,4 +1,4 @@
-package com.ticketexchange.product.domain;
+package com.ticketlounge.domain.product;
 
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;

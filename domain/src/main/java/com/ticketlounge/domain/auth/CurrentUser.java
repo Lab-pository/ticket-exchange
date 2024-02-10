@@ -1,4 +1,4 @@
-package com.ticketexchange.auth;
+package com.ticketlounge.domain.auth;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

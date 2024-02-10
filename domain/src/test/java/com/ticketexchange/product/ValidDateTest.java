@@ -1,4 +1,4 @@
-package com.ticketexchange.product.domain.vo;
+package com.ticketexchange.product;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import com.ticketexchange.product.domain.ValidDate;
+import com.ticketlounge.domain.product.ValidDate;
 
 class ValidDateTest {
 

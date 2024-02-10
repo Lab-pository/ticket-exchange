@@ -1,4 +1,4 @@
-package com.ticketexchange.product.domain;
+package com.ticketlounge.domain.product;
 
 import java.util.Objects;
 
