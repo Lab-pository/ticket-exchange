@@ -1,0 +1,11 @@
+dependencies {
+    implementation(project(":adapter:persistence"))
+    implementation(project(":adapter:web"))
+    implementation(project(":application"))
+    implementation(project(":domain"))
+
+    implementation("org.flywaydb:flyway-mysql")
+    testImplementation("io.rest-assured:rest-assured:${restAssuredVersion}")
+    runtimeOnly("com.h2database:h2")
+    runtimeOnly("com.mysql:mysql-connector-j")
+}

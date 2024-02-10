@@ -1,11 +1,11 @@
-package com.ticketexchange.product.acceptance;
+package com.ticketlounge.product.acceptance;
 
-import static com.ticketexchange.member.api.MemberApiSupporter.로그인;
-import static com.ticketexchange.member.api.MemberApiSupporter.회원가입;
-import static com.ticketexchange.product.api.ProductApiSupporter.상품_생성;
-import static com.ticketexchange.product.fixture.ProductFixture.당첨되는_상품_생성_요청;
-import static com.ticketexchange.product.fixture.ProductFixture.당첨되지_않는_상품_생성_요청;
-import static com.ticketexchange.product.fixture.ProductFixture.상품_생성_요청;
+import static com.ticketlounge.member.api.MemberApiSupporter.로그인;
+import static com.ticketlounge.member.api.MemberApiSupporter.회원가입;
+import static com.ticketlounge.product.api.ProductApiSupporter.상품_생성;
+import static com.ticketlounge.product.fixture.ProductFixture.당첨되는_상품_생성_요청;
+import static com.ticketlounge.product.fixture.ProductFixture.당첨되지_않는_상품_생성_요청;
+import static com.ticketlounge.product.fixture.ProductFixture.상품_생성_요청;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,10 +13,10 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 
-import com.ticketexchange.common.acceptance.AcceptanceTest;
+import com.ticketlounge.AcceptanceTest.AcceptanceTest;
 
+import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 
 class ProductAcceptanceTest extends AcceptanceTest {
@@ -28,8 +28,8 @@ class ProductAcceptanceTest extends AcceptanceTest {
         void 정상적인_요청인_경우_상품이_생성된다() {
             final var 응답 = given()
                     .body(상품_생성_요청())
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                    .contentType(ContentType.JSON)
+                    .accept(ContentType.JSON)
                     .when()
                     .post("/api/v1/products")
                     .then().extract();
@@ -50,8 +50,8 @@ class ProductAcceptanceTest extends AcceptanceTest {
 
             final var 응답 = given()
                     .header(new Header("X-AUTH-TOKEN", 토큰))
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                    .contentType(ContentType.JSON)
+                    .accept(ContentType.JSON)
                     .when()
                     .post("/api/v1/products/{productId}", 상품_ID)
                     .then().extract();
@@ -68,8 +68,8 @@ class ProductAcceptanceTest extends AcceptanceTest {
 
             final var 응답 = given()
                     .header(new Header("X-AUTH-TOKEN", 토큰))
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
-                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                    .contentType(ContentType.JSON)
+                    .accept(ContentType.JSON)
                     .when()
                     .post("/api/v1/products/{productId}", 상품_ID)
                     .then().extract();

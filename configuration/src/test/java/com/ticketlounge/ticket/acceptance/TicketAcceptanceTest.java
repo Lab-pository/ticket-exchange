@@ -1,8 +1,8 @@
-package com.ticketexchange.ticket.acceptance;
+package com.ticketlounge.ticket.acceptance;
 
-import static com.ticketexchange.member.api.MemberApiSupporter.로그인;
-import static com.ticketexchange.member.api.MemberApiSupporter.회원가입;
-import static com.ticketexchange.ticket.fixture.TicketFixture.티켓_발급_요청;
+import static com.ticketlounge.member.api.MemberApiSupporter.로그인;
+import static com.ticketlounge.member.api.MemberApiSupporter.회원가입;
+import static com.ticketlounge.ticket.fixture.TicketFixture.티켓_발급_요청;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,10 +10,10 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 
-import com.ticketexchange.common.acceptance.AcceptanceTest;
+import com.ticketlounge.AcceptanceTest.AcceptanceTest;
 
+import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 
 class TicketAcceptanceTest extends AcceptanceTest {
@@ -30,7 +30,7 @@ class TicketAcceptanceTest extends AcceptanceTest {
             final var 응답 = given()
                     .header(new Header("X-AUTH-TOKEN", 토큰))
                     .body(티켓_발급_요청())
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .contentType(ContentType.JSON)
                     .when()
                     .post("/api/v1/tickets")
                     .then().extract();

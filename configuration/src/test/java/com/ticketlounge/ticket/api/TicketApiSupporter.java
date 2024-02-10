@@ -1,12 +1,11 @@
-package com.ticketexchange.ticket.api;
+package com.ticketlounge.ticket.api;
 
-import static com.ticketexchange.ticket.fixture.TicketFixture.티켓_발급_요청;
+import static com.ticketlounge.ticket.fixture.TicketFixture.티켓_발급_요청;
 import static io.restassured.RestAssured.given;
 
-import org.springframework.http.MediaType;
+import com.ticketlounge.web.ticket.request.TicketRequest;
 
-import com.ticketexchange.ticket.adapter.in.web.request.TicketRequest;
-
+import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -20,7 +19,7 @@ public final class TicketApiSupporter {
         return given()
                 .header(new Header("X-AUTH-TOKEN", 토큰))
                 .body(티켓_발급_요청())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(ContentType.JSON)
                 .when()
                 .post("/api/v1/tickets")
                 .then()
@@ -31,7 +30,7 @@ public final class TicketApiSupporter {
         return given()
                 .header(new Header("X-AUTH-TOKEN", 토큰))
                 .body(티켓_발급_요청)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(ContentType.JSON)
                 .when()
                 .post("/api/v1/tickets")
                 .then()
