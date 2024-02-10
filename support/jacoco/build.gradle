@@ -1,0 +1,21 @@
+import java.util.stream.Collectors
+
+apply plugin: 'jacoco-report-aggregation'
+
+var allProjects = getRootProject().getSubprojects().stream()
+        .filter(p -> !p.getDisplayName().contains('root project'))
+        .collect(Collectors.toList())
+
+var allProjectsExcludeJacoco = allProjects.stream()
+        .filter(p -> !p.getDisplayName().contains('jacoco')
+                && !p.getDisplayName().contains('root project'))
+        .collect(Collectors.toList())
+
+testCodeCoverageReport {
+    getClassDirectories().setFrom(files(
+            allProjects.collect { it.fileTree(dir: "${it.buildDir}/classes/java/main") }))
+}
+
+dependencies {
+    implementation allProjectsExcludeJacoco
+}
