@@ -2,7 +2,7 @@ import java.util.stream.Collectors
 
 apply plugin: 'jacoco-report-aggregation'
 
-var allProjects = getRootProject().getSubprojects().stream()
+var allProjects = rootProject.getSubprojects().stream()
         .filter(p -> !p.getDisplayName().contains('root project'))
         .collect(Collectors.toList())
 
@@ -12,6 +12,9 @@ var allProjectsExcludeJacoco = allProjects.stream()
         .collect(Collectors.toList())
 
 testCodeCoverageReport {
+    reports {
+        xml.outputLocation = rootProject.layout.projectDirectory.file(".qodana/code-coverage/result.xml")
+    }
     getClassDirectories().setFrom(files(
             allProjects.collect { it.fileTree(dir: "${it.buildDir}/classes/java/main") }))
 }
