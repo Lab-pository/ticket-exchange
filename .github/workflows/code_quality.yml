@@ -1,10 +1,8 @@
 name: Qodana
 on:
   pull_request:
-  push:
     branches:
       - main
-      - 11-modify-architecture
 
 jobs:
   qodana:
