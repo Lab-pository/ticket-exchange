@@ -67,3 +67,6 @@ coverage
 
 ### Database ###
 /db/
+
+### qodana folder
+.qodana/
