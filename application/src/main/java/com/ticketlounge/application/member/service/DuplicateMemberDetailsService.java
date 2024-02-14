@@ -14,7 +14,6 @@ public class DuplicateMemberDetailsService implements DuplicateMemberDetailsQuer
 
     public DuplicateMemberDetailsService(final MemberQueryPort memberQueryPort) {
         this.memberQueryPort = memberQueryPort;
-
     }
 
     @Override
